@@ -1,13 +1,21 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import MainMenu from './screens/MainMenu'
+import ExerciseList from './screens/ExerciseList'
+import NewExerciseForm from './screens/NewExerciseForm'
+
+const Stack = createNativeStackNavigator()
 
 const App = () => {
   return (
-    <View>
-      <Text>My Gym Tracker</Text>
-      <Button title="Add Exercise" />
-      <Button title="View Exercise List" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="MainMenu" component={MainMenu} />
+        <Stack.Screen name="ExerciseList" component={ExerciseList} />
+        <Stack.Screen name="NewExerciseForm" component={NewExerciseForm} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
