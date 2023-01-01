@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import React, { useState } from 'react'
+import { View, TextInput, Button } from 'react-native'
 
-const ExerciseForm = ({ onSubmit }) => {
-  const [name, setName] = useState('');
-  const [sets, setSets] = useState();
-  const [reps, setReps] = useState();
-  const [weight, setWeight] = useState();
+const onSubmit = () => {}
+
+const NewExerciseForm = ({navigation}) => {
+  const [name, setName] = useState('')
+  const [sets, setSets] = useState('')
+  const [reps, setReps] = useState('')
+  const [weight, setWeight] = useState('')
 
   return (
     <View>
@@ -32,9 +34,9 @@ const ExerciseForm = ({ onSubmit }) => {
         value={weight}
         onChangeText={(text) => setWeight(text)}
       />
-      <Button title="Save Exercise" onPress={() => onSubmit(name, sets, reps, weight)} />
+      <Button title="Save Exercise" onPress={(navigation) => {onSubmit(navigation)}} />
     </View>
   );
 };
 
-export default ExerciseForm;
+export default NewExerciseForm
