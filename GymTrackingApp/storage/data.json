@@ -1,0 +1,7 @@
+{
+    "exercises": [
+        {"name": "Bench Press"},
+        {"name": "Deadlift"},
+        {"name": "Squat"}
+    ]
+}

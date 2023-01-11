@@ -1,23 +1,46 @@
-import React from 'react'
-import { View, FlatList, Text, Button } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, FlatList, Text, Button, StyleSheet } from 'react-native'
+import { getData } from '../storage/dataHelper'
+
+const styles = StyleSheet.create(
+    {
+        container: {
+
+        },
+        title: {
+            fontWeight: "bold",
+            height: 20,
+            alignSelf: "center",
+        }
+    }
+)
+
+const renderExerciseItem = ({item}) => {
+    return (
+        <Text>{item.name}</Text>
+    )
+}
 
 const ExerciseList = ({navigation}) => {
+    const [exerciseList, setExerciseList] = useState([])
+
+    useEffect(() => {
+        getData("exercises").then((val) => {
+            console.log("exercise list:", val)
+            setExerciseList(val)
+        })
+    }, [])
+
     return (
         <View>
-            <Text>Exercises</Text>
+            <Text style={styles.title}>Exercises</Text>
             <FlatList
-                data={
-                    [
-                        {key: "Bench Press"},
-                        {key: "Squat"},
-                        {key: "Deadlift"},
-                    ]
-                }
-                renderItem={({item}) => <Text>{item.key}</Text>}
+                data={exerciseList}
+                renderItem={renderExerciseItem}
             />
             <Button
                 title="Add New Exercise"
-                onPress={navigation.navigate("NewExerciseForm")}
+                onPress={() => {navigation.navigate("NewExerciseForm")}}
             />
         </View>
     )
