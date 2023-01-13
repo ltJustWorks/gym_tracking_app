@@ -29,7 +29,7 @@ const ExerciseList = ({navigation}) => {
             console.log("exercise list:", val)
             setExerciseList(val)
         })
-    }, [])
+    })
 
     return (
         <View>
