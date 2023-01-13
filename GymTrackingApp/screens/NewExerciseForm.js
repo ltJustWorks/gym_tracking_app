@@ -4,8 +4,7 @@ import { getData, saveData } from '../storage/dataHelper';
 
 const updateExerciseList = (exerciseObj) => {
   // Generate an id for exercise when submitting
-  console.log(exerciseObj)
-  getData("exercises")
+  return getData("exercises")
     .then((exerciseList) => {
       exerciseList.push(exerciseObj)
       saveData("exercises", exerciseList)
@@ -46,7 +45,7 @@ const NewExerciseForm = ({navigation}) => {
       />
       <Button title="Save Exercise" onPress={() => {
         updateExerciseList({name: name, sets: sets, reps: reps, weight: weight})
-        navigation.navigate("ExerciseList")
+          .then(() => navigation.navigate("ExerciseList"))
       }
         } />
     </View>
