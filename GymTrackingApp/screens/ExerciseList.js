@@ -8,6 +8,10 @@ const styles = StyleSheet.create(
         container: {
             flex: 1
         },
+        exerciseContainer: {
+            backgroundColor: "#eaeaea",
+            margin: 10
+        },
         title: {
             fontWeight: "bold",
             fontSize: 30,
@@ -24,7 +28,7 @@ const styles = StyleSheet.create(
 
 const ExerciseItem = ({name, sets, reps, weight}) => {
     return (
-        <View>
+        <View style={styles.exerciseContainer}>
             <Text style={styles.itemtitle}>{name}</Text>
             <Text style={styles.subtext}>{sets} sets</Text>
             <Text style={styles.subtext}>{reps} reps</Text>
