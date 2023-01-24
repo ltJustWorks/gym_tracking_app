@@ -6,11 +6,20 @@ const initData = () => {
     getData("exercises")
         .then((val) => {
             console.log("initial data:", val)
-            if (val !== []) {
+            if (!(Array.isArray(val))) {
                 saveData("exercises", [])
             }
         }
     )
+    
+    getData("templates")
+        .then((val) => {
+            console.log("initial template data:", val)
+            if (!(Array.isArray(val)) || (val.includes(null))) {
+                saveData("templates", [])
+                console.log("template data initialized")
+            }
+        })
 }
 
 const MainMenu = ({navigation}) => {
@@ -22,6 +31,7 @@ const MainMenu = ({navigation}) => {
         />
         <Button
             title="Workout template list"
+            onPress={() => navigation.navigate("ExerciseTemplateList")}
         />
         <Button
             title="Exercise list"

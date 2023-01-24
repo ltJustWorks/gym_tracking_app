@@ -1,30 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, FlatList, Text, Button, StyleSheet } from 'react-native'
+import { View, FlatList, Text, Button } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
 import { getData } from '../storage/dataHelper'
-
-const styles = StyleSheet.create(
-    {
-        container: {
-            flex: 1
-        },
-        exerciseContainer: {
-            backgroundColor: "#eaeaea",
-            margin: 10
-        },
-        title: {
-            fontWeight: "bold",
-            fontSize: 30,
-            alignSelf: "center"
-        },
-        itemtitle: {
-            fontSize: 25
-        },
-        subtext: {
-            fontSize: 20 
-        }
-    }
-)
+import styles from '../styles/styles'
 
 const ExerciseItem = ({name, sets, reps, weight}) => {
     return (
@@ -39,7 +17,12 @@ const ExerciseItem = ({name, sets, reps, weight}) => {
 
 const renderExerciseItem = ({item}) => {
     return (
-        <ExerciseItem name={item.name} sets={item.sets} />
+        <ExerciseItem 
+            name={item.name} 
+            sets={item.sets} 
+            reps={item.reps}
+            weight={item.weight}
+        />
     )
 }
 
@@ -48,7 +31,8 @@ const ExerciseList = ({navigation}) => {
     const [exerciseList, setExerciseList] = useState([])
 
     useEffect(() => {
-        getData("exercises").then((val) => {
+        getData("exercises")
+        .then((val) => {
             console.log("exercise list:", val)
             setExerciseList(val)
         })
