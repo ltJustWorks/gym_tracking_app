@@ -13,6 +13,18 @@ Exercises:
     ...
 ]
 
+Templates:
+
+[
+    [
+        1: {exercise1},
+        2: {exercise2},
+        ... (Bad implementation :<)
+        -> import exercises list, 
+        nvm use SQL
+    ]
+]
+
 adding an exercise:
 * get jsonified exercise list and parse (check if list)
 * append new exercise object to list
