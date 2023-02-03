@@ -4,10 +4,22 @@ import { getData } from '../storage/dataHelper'
 import { useIsFocused } from '@react-navigation/native'
 import styles from '../styles/styles'
 
-const TemplateItem = ({name}) => {
+const Template = ({exerciseList}) => {
+    console.log("exerciselist in template list screen:", exerciseList)
     return (
-        <View>
-        </View>
+        <FlatList
+            data={exerciseList}
+            renderItem={({item}) => <Text>{item}</Text>}
+        />
+    )
+}
+
+const renderTemplate = (exerciseList) => {
+    console.log("passed:", exerciseList)
+    return (
+        <Template
+            exerciseList={exerciseList}
+        />
     )
 }
 
@@ -30,12 +42,7 @@ const ExerciseTemplateList = ({navigation}) => {
 
             <FlatList
                 data={templateList}
-                /*renderItem={({item}) => {
-                    <TemplateItem
-                        name={item.name}
-                    />
-                }}
-                */
+                renderItem={({item}) => renderTemplate(item)}
             />
 
             <Button

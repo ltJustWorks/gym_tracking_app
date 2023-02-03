@@ -4,7 +4,6 @@ import { getData, saveData } from '../storage/dataHelper'
 import styles from '../styles/styles'
 
 const addExercise = (newExerciseName, exerciseTemplate, setExerciseTemplate) => {
-    console.log("added exercises:", [...exerciseTemplate, newExerciseName])
     setExerciseTemplate([...exerciseTemplate, newExerciseName])
 }
 
@@ -21,7 +20,7 @@ const ExerciseSelection = ({item, exerciseTemplate, setExerciseTemplate}) => {
     )
 }
 
-const onSaveTemplate = ({template, navigation}) => {
+const onSaveTemplate = (template, navigation) => {
     getData("templates")
         .then((templatesList) => {
             return [...templatesList, template]
