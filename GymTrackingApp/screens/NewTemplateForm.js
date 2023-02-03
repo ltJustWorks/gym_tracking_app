@@ -4,6 +4,7 @@ import { getData, saveData } from '../storage/dataHelper'
 import styles from '../styles/styles'
 
 const addExercise = (newExerciseName, exerciseTemplate, setExerciseTemplate) => {
+    console.log("added exercises:", [...exerciseTemplate, newExerciseName])
     setExerciseTemplate([...exerciseTemplate, newExerciseName])
 }
 
@@ -40,7 +41,9 @@ const NewTemplateForm = ({navigation}) => {
     useEffect(() => {
         getData("exercises")
             .then((val) => setExerciseList(val))
-    })
+    }, [])
+
+    useEffect(() => console.log("template updated:", exerciseTemplate), [exerciseTemplate])
 
     return (
         <View>
@@ -53,7 +56,7 @@ const NewTemplateForm = ({navigation}) => {
                         <ExerciseSelection 
                             item={item} 
                             exerciseTemplate={exerciseTemplate} 
-                            setExerciseTemplate={setExerciseTemplate}
+                            setExerciseTemplate={setExerciseTemplate} 
                         />
                     )
                 }}
@@ -62,15 +65,15 @@ const NewTemplateForm = ({navigation}) => {
             <Text style={styles.title}>Added Exercises</Text>
             <FlatList
                 data={exerciseTemplate}
-                renderItem={({item}) => <Text>{item.name}</Text>}
+                renderItem={({item}) => <Text>{item}</Text>}
             />
 
             <Button 
                 title="Save template"
-                onPress={(navigation) => onSaveTemplate(exerciseTemplate, navigation)}
+                onPress={() => onSaveTemplate(exerciseTemplate, navigation)}
             />
         </View>
     )
 }
 
-export default NewTemplateForm;
+export default NewTemplateForm
