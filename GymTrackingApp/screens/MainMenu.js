@@ -28,6 +28,7 @@ const MainMenu = ({navigation}) => {
     return <View>
         <Button
             title="Start a workout"
+            onPress={() => navigation.navigate("SelectTemplate")}
         />
         <Button
             title="Workout template list"

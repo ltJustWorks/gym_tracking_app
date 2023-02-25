@@ -26,11 +26,11 @@ const onSaveTemplate = (template, navigation) => {
             return [...templatesList, template]
         })
         .then((newTemplatesList) => {
-            console.log("new templates list:", newTemplatesList)
+            //console.log("new templates list:", newTemplatesList)
             saveData("templates", newTemplatesList)
         })
+        .then(() => navigation.navigate("ExerciseTemplateList"))
 
-    navigation.navigate("ExerciseTemplateList")
 }
 
 const NewTemplateForm = ({navigation}) => {

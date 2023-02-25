@@ -24,23 +24,24 @@ const renderTemplate = (exerciseList) => {
 }
 
 const ExerciseTemplateList = ({navigation}) => {
-    const isFocused = useIsFocused()
-
     const [templateList, setTemplateList] = useState([])
 
     useEffect(() => {
-        getData("templates")
-        .then((val) => {
-            console.log("template list:", val)
-            setTemplateList(val)
+        const focusHandler = navigation.addListener('focus', () => {
+            getData("templates")
+            .then((val) => {
+                console.log("template list:", val)
+                setTemplateList(val)
+            })
         })
-    }, [isFocused])
+    }, [navigation])
 
     return (
-        <View>
+        <View style={styles.container}>
             <Text style={styles.title}>Exercise Templates</Text>
 
             <FlatList
+                style={styles.templateList}
                 data={templateList}
                 renderItem={({item}) => renderTemplate(item)}
             />
