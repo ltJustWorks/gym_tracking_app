@@ -6,6 +6,8 @@ import ExerciseList from './screens/ExerciseList'
 import NewExerciseForm from './screens/NewExerciseForm'
 import ExerciseTemplateList from './screens/ExerciseTemplateList';
 import NewTemplateForm from './screens/NewTemplateForm';
+import SelectTemplate from './screens/SelectTemplate';
+import WorkoutProgress from './screens/WorkoutProgress';
 
 const Stack = createNativeStackNavigator()
 
@@ -18,6 +20,8 @@ const App = () => {
         <Stack.Screen name="NewTemplateForm" component={NewTemplateForm} />
         <Stack.Screen name="ExerciseList" component={ExerciseList} />
         <Stack.Screen name="NewExerciseForm" component={NewExerciseForm} />
+        <Stack.Screen name="SelectTemplate" component={SelectTemplate} />
+        <Stack.Screen name="WorkoutProgress" component={WorkoutProgress} />
       </Stack.Navigator>
     </NavigationContainer>
   );

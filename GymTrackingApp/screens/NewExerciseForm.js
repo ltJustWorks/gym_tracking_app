@@ -43,11 +43,13 @@ const NewExerciseForm = ({navigation}) => {
         value={weight}
         onChangeText={(text) => setWeight(text)}
       />
-      <Button title="Save Exercise" onPress={() => {
-        updateExerciseList({name: name, sets: sets, reps: reps, weight: weight})
-          .then(() => navigation.navigate("ExerciseList"))
-      }
-        } />
+      <Button 
+        title="Save Exercise" 
+        onPress={() => {
+          updateExerciseList({name: name, sets: sets, reps: reps, weight: weight})
+            .then(() => navigation.navigate("ExerciseList"))
+        }} 
+      />
     </View>
   );
 };

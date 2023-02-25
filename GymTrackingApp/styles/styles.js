@@ -19,6 +19,15 @@ const styles = StyleSheet.create(
         },
         subtext: {
             fontSize: 20 
+        },
+        templateList: {
+            //flex: 1
+        },
+        set: {
+            flex: 1,
+        },
+        setRow: {
+            flexDirection: "row"
         }
     }
 )
