@@ -17,35 +17,35 @@ const onChangeSet = (set_no, new_weight, new_reps, sets, setSets) => {
 }
 */
 
-const EditableSet = ({set, exercise, sets, setSets}) => {
+const EditableSet = ({set, sets, setSets}) => {
     const [currWeight, setCurrWeight] = useState('')
     const [currReps, setCurrReps] = useState('')
     const prevWeight = set.weight
     const prevReps = set.reps
 
-    console.log("set:", set.set_no)
-
     return (
         <View>
-            <Text>{exercise.name} Set {set.set_no}</Text>
+            <Text style={styles.subtext}>Set {set.set_no}</Text>
             <View style={styles.setRow}>
-                <TextInput
+                <TextInput 
+                    style={styles.subtext2}
                     placeholder={prevWeight}
                     value={currWeight}
                     keyboardType="number-pad"
                     onChangeText={(text) => setCurrWeight(text)}
                 />
-                <Text>lbs</Text>
+                <Text style={styles.subtext2}>lbs</Text>
             </View>
 
             <View style={styles.setRow}>
                 <TextInput
+                    style={styles.subtext2}
                     placeholder={prevReps}
                     value={currReps}
                     keyboardType="number-pad"
                     onChangeText={(text) => setCurrReps(text)}
                 />
-                <Text>Reps</Text>
+                <Text style={styles.subtext2}>Reps</Text>
             </View>
         </View>
     )
@@ -86,12 +86,20 @@ const Exercise = (props) => {
     }, [isFocused])
 
     return (
-        <FlatList 
-            data={sets}
-            renderItem={({item}) => {
-                return <EditableSet set={item} exercise={exercise} sets={sets} setSets={setSets} />}}
-        /> 
-    )
+        <View>
+            <Text style={styles.itemtitle}>{exercise.name}</Text>
+            <FlatList 
+                data={sets}
+                renderItem={({item}) => {
+                    return <EditableSet 
+                        set={item} 
+                        exercise={exercise} 
+                        sets={sets} 
+                        setSets={setSets} 
+                    />}}
+            /> 
+        </View>
+        )
 }
 
 const findReferenceExercise = (referenceExercises, selectedExerciseName) => {

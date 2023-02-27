@@ -20,14 +20,22 @@ const styles = StyleSheet.create(
         subtext: {
             fontSize: 20 
         },
+        subtext2: {
+            fontSize: 18
+        },
         templateList: {
             //flex: 1
         },
+        template: {
+            backgroundColor: "#eaeaea",
+            margin: 10
+        },
         set: {
-            flex: 1,
         },
         setRow: {
-            flexDirection: "row"
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center"
         }
     }
 )
