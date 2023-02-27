@@ -7,10 +7,12 @@ import styles from '../styles/styles'
 const Template = ({exerciseList}) => {
     console.log("exerciselist in template list screen:", exerciseList)
     return (
-        <FlatList
-            data={exerciseList}
-            renderItem={({item}) => <Text>{item}</Text>}
-        />
+        <View style={styles.template}>
+            <FlatList
+                data={exerciseList}
+                renderItem={({item}) => <Text style={styles.subtext}>{item}</Text>}
+            />
+        </View>
     )
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { View, FlatList, Text, Button } from "react-native"
 import { getData, saveData } from "../storage/dataHelper"
+import styles from "../styles/styles"
 
 // load templates
 // select template button -> pass template to progress screen
@@ -14,7 +15,7 @@ const TemplateSelection = ({navigation, exercises}) => {
         <View>
             <FlatList
                 data={exercises}
-                renderItem={({item}) => <Text>{item}</Text>}
+                renderItem={({item}) => <Text style={styles.subtext2}>{item}</Text>}
             />
             <Button 
                 title="Select Template"
