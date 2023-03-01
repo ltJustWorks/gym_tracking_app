@@ -44,7 +44,7 @@ const NewExerciseButton = ({navigation}) => {
     return (
             <Button
                 title="Add New Exercise"
-                onPress={() => {navigation.navigate("NewExerciseForm")}}
+                onPress={() => {navigation.navigate("New Exercise Form")}}
             />
     )
 }
@@ -66,7 +66,7 @@ const ExerciseList = ({navigation}) => {
             <View style={styles.dividerContainer}>
                 <View>
                     <Text style={styles.title}>Exercises</Text>
-                    <Text style={styles.itemtitle}>No exercises, add some to start</Text>
+                    <Text style={styles.subtext}>No exercises, add some to start</Text>
                 </View>
                 <NewExerciseButton navigation={navigation} />
             </View>

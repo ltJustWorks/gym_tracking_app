@@ -3,30 +3,38 @@ import { View, Button, FlatList, Text } from 'react-native'
 import { getData, saveData } from '../storage/dataHelper'
 import styles from '../styles/styles'
 
-const onDeleteTemplate = (exerciseList) => {
+const onDeleteTemplate = (templateObjToRemove, templateList, setTemplateList) => {
+    console.log("old template list:", templateList)
+    const newTemplateList = templateList.filter(templateObj => templateObj.name !== templateObjToRemove.name)
+    console.log("new template list:", newTemplateList)
+    saveData("templates", newTemplateList)
+        .then(setTemplateList(newTemplateList))
 }
 
-const Template = ({exerciseObj}) => {
-    console.log("exerciseobj in template list screen:", exerciseObj)
+const Template = ({templateObj, templateList, setTemplateList}) => {
+    console.log("templateobj in template list screen:", templateObj)
     return (
         <View style={styles.template}>
+            <Text style={styles.itemtitle}>{templateObj.name}</Text>
             <FlatList
-                data={exerciseObj.exercises}
+                data={templateObj.exercises}
                 renderItem={({item}) => <Text style={styles.subtext}>{item}</Text>}
             />
             <Button
                 title="Delete Template"
-                onPress={(exerciseObj => onDeleteTemplate(exerciseObj))}
+                onPress={(() => onDeleteTemplate(templateObj, templateList, setTemplateList))}
             />
         </View>
     )
 }
 
-const renderTemplate = (exerciseObj) => {
-    console.log("passed:", exerciseObj)
+const renderTemplate = (templateObj, templateList, setTemplateList) => {
+    console.log("passed:", templateObj)
     return (
         <Template
-            exerciseObj={exerciseObj}
+            templateObj={templateObj}
+            templateList={templateList}
+            setTemplateList={setTemplateList}
         />
     )
 }
@@ -35,7 +43,7 @@ const NewTemplateButton = ({navigation}) => {
     return (
         <Button 
             title="Add template"
-            onPress={() => navigation.navigate("NewTemplateForm")}
+            onPress={() => navigation.navigate("New Template Form")}
         />
     )
 }
@@ -58,7 +66,7 @@ const ExerciseTemplateList = ({navigation}) => {
             <View style={styles.dividerContainer}>
                 <View>
                     <Text style={styles.title}>Exercise Templates</Text>
-                    <Text style={styles.itemtitle}>No templates, add some to start</Text>
+                    <Text style={styles.subtext}>No templates, add some to start</Text>
                 </View>
                 <NewTemplateButton navigation={navigation} />
             </View>
@@ -72,7 +80,7 @@ const ExerciseTemplateList = ({navigation}) => {
             <FlatList
                 style={styles.templateList}
                 data={templateList}
-                renderItem={({item}) => renderTemplate(item)}
+                renderItem={({item}) => renderTemplate(item, templateList, setTemplateList)}
             />
 
             <NewTemplateButton navigation={navigation} />

@@ -15,13 +15,13 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="MainMenu" component={MainMenu} />
-        <Stack.Screen name="ExerciseTemplateList" component={ExerciseTemplateList} />
-        <Stack.Screen name="NewTemplateForm" component={NewTemplateForm} />
-        <Stack.Screen name="ExerciseList" component={ExerciseList} />
-        <Stack.Screen name="NewExerciseForm" component={NewExerciseForm} />
-        <Stack.Screen name="SelectTemplate" component={SelectTemplate} />
-        <Stack.Screen name="WorkoutProgress" component={WorkoutProgress} />
+        <Stack.Screen name="Main Menu" component={MainMenu} />
+        <Stack.Screen name="Exercise Template List" component={ExerciseTemplateList} />
+        <Stack.Screen name="New Template Form" component={NewTemplateForm} />
+        <Stack.Screen name="Exercise List" component={ExerciseList} />
+        <Stack.Screen name="New Exercise Form" component={NewExerciseForm} />
+        <Stack.Screen name="Select Template" component={SelectTemplate} />
+        <Stack.Screen name="Workout Progress" component={WorkoutProgress} />
       </Stack.Navigator>
     </NavigationContainer>
   );

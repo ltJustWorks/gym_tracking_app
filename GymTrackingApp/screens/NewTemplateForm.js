@@ -1,7 +1,7 @@
-import { template } from '@babel/core'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useId } from 'react'
 import { View, Text, TextInput, Button, FlatList } from 'react-native'
 import { getData, saveData } from '../storage/dataHelper'
+//import { v4 as uuidv4 } from 'uuid'
 import styles from '../styles/styles'
 
 const addExercise = (newExerciseName, templateObj, setTemplateObj) => {
@@ -14,7 +14,7 @@ const ExerciseSelection = ({item, templateObj, setTemplateObj}) => {
     const {name} = item
     return (
         <View>
-            <Text>{name}</Text>
+            <Text style={styles.subtext}>{name}</Text>
             <Button 
                 title="Add exercise"
                 onPress={() => {addExercise(name, templateObj, setTemplateObj)}}
@@ -32,13 +32,14 @@ const onSaveTemplate = (templateObj, navigation) => {
             //console.log("new templates list:", newTemplatesList)
             saveData("templates", newTemplatesList)
         })
-        .then(() => navigation.navigate("ExerciseTemplateList"))
+        .then(() => navigation.navigate("Exercise Template List"))
 
 }
 
 const NewTemplateForm = ({navigation}) => {
     const [templateObj, setTemplateObj] = useState({})
     const [exerciseList, setExerciseList] = useState([])
+    //const newId = uuidv4()
 
     useEffect(() => {
         getData("exercises")
@@ -50,10 +51,11 @@ const NewTemplateForm = ({navigation}) => {
         if (!templateObj.exercises) {
             newTemplateObj = {...newTemplateObj, exercises: []}
         }
+        /* TODO: add react native uuid package 
         if (!templateObj.id) {
-            // TODO: add id function
-            newTemplateObj = {...newTemplateObj, id: 1}
+            newTemplateObj = {...newTemplateObj, id: newId}
         }
+        */
         if (!templateObj.name) {
             newTemplateObj = {...newTemplateObj, name: ''}
         }
@@ -88,7 +90,7 @@ const NewTemplateForm = ({navigation}) => {
             <Text style={styles.title}>Added Exercises</Text>
             <FlatList
                 data={templateObj.exercises}
-                renderItem={({item}) => <Text>{item}</Text>}
+                renderItem={({item}) => <Text style={styles.subtext}>{item}</Text>}
             />
 
             <Button 

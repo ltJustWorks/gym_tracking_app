@@ -50,7 +50,7 @@ const NewExerciseForm = ({navigation}) => {
         title="Save Exercise" 
         onPress={() => {
           updateExerciseList({name: name, sets: sets, reps: reps, weight: weight})
-            .then(() => navigation.navigate("ExerciseList"))
+            .then(() => navigation.navigate("Exercise List"))
         }} 
       />
     </View>

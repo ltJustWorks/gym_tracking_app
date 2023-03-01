@@ -27,6 +27,7 @@ const EditableSet = ({set, sets, setSets}) => {
         <View>
             <Text style={styles.subtext}>Set {set.set_no}</Text>
             <View style={styles.setRow}>
+            <View style={styles.setEntry}>
                 <TextInput 
                     style={styles.subtext2}
                     placeholder={prevWeight}
@@ -37,7 +38,7 @@ const EditableSet = ({set, sets, setSets}) => {
                 <Text style={styles.subtext2}>lbs</Text>
             </View>
 
-            <View style={styles.setRow}>
+            <View style={styles.setEntry}>
                 <TextInput
                     style={styles.subtext2}
                     placeholder={prevReps}
@@ -46,6 +47,7 @@ const EditableSet = ({set, sets, setSets}) => {
                     onChangeText={(text) => setCurrReps(text)}
                 />
                 <Text style={styles.subtext2}>Reps</Text>
+            </View>
             </View>
         </View>
     )
@@ -86,7 +88,7 @@ const Exercise = (props) => {
     }, [isFocused])
 
     return (
-        <View>
+        <View style={styles.template}>
             <Text style={styles.itemtitle}>{exercise.name}</Text>
             <FlatList 
                 data={sets}
@@ -145,7 +147,7 @@ const WorkoutProgress = ({navigation}) => {
             />
             <Button
                 title="Finish workout"
-                onPress={() => navigation.navigate("MainMenu")}
+                onPress={() => navigation.navigate("Main Menu")}
             />
         </View>
     )

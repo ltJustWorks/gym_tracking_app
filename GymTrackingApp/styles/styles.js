@@ -30,10 +30,14 @@ const styles = StyleSheet.create(
             backgroundColor: "#eaeaea",
             margin: 10
         },
-        setRow: {
+        setEntry: {
             flex: 1,
             flexDirection: "row",
             alignItems: "center"
+        },
+        setRow: {
+            flex: 1,
+            flexDirection: "row", 
         },
         dividerContainer: {
             flex: 1,

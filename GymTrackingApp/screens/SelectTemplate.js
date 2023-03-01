@@ -7,7 +7,7 @@ import styles from "../styles/styles"
 // select template button -> pass template to progress screen
 
 const onSelectTemplate = (navigation, exercises) => {
-    navigation.navigate("WorkoutProgress", {exercises: exercises})
+    navigation.navigate("Workout Progress", {exercises: exercises})
 }
 
 const TemplateSelection = ({navigation, templateObj}) => {

@@ -28,15 +28,15 @@ const MainMenu = ({navigation}) => {
     return <View>
         <Button
             title="Start a workout"
-            onPress={() => navigation.navigate("SelectTemplate")}
+            onPress={() => navigation.navigate("Select Template")}
         />
         <Button
             title="Workout template list"
-            onPress={() => navigation.navigate("ExerciseTemplateList")}
+            onPress={() => navigation.navigate("Exercise Template List")}
         />
         <Button
             title="Exercise list"
-            onPress={() => navigation.navigate("ExerciseList")}
+            onPress={() => navigation.navigate("Exercise List")}
         />
     </View>
 }
