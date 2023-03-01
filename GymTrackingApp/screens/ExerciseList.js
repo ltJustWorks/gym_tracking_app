@@ -63,8 +63,11 @@ const ExerciseList = ({navigation}) => {
 
     if (exerciseList.length === 0) {
         return (
-            <View>
-                <Text style={styles.itemtitle}>No exercises, add some to start</Text>
+            <View style={styles.dividerContainer}>
+                <View>
+                    <Text style={styles.title}>Exercises</Text>
+                    <Text style={styles.itemtitle}>No exercises, add some to start</Text>
+                </View>
                 <NewExerciseButton navigation={navigation} />
             </View>
         )

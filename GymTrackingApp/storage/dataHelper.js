@@ -19,10 +19,20 @@ Templates:
     [
         1: {exercise1},
         2: {exercise2},
-        ... (Bad implementation :<)
-        -> import exercises list, 
-        nvm use SQL
     ]
+]
+
+New templates form: 
+
+[
+    {
+        id: ...,
+        name: ...,
+        exercises: [
+            exercise1,
+            ...
+        ]
+    }
 ]
 
 adding an exercise:

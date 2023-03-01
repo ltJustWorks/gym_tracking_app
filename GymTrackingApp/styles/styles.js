@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create(
     {
         container: {
-            flex: 1
+            flex: 1,
         },
         exerciseContainer: {
             backgroundColor: "#eaeaea",
@@ -30,12 +30,14 @@ const styles = StyleSheet.create(
             backgroundColor: "#eaeaea",
             margin: 10
         },
-        set: {
-        },
         setRow: {
             flex: 1,
             flexDirection: "row",
             alignItems: "center"
+        },
+        dividerContainer: {
+            flex: 1,
+            justifyContent: "space-between"
         }
     }
 )

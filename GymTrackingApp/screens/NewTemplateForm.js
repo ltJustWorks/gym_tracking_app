@@ -1,29 +1,32 @@
+import { template } from '@babel/core'
 import React, { useState, useEffect } from 'react'
-import { View, Text, Button, FlatList } from 'react-native'
+import { View, Text, TextInput, Button, FlatList } from 'react-native'
 import { getData, saveData } from '../storage/dataHelper'
 import styles from '../styles/styles'
 
-const addExercise = (newExerciseName, exerciseTemplate, setExerciseTemplate) => {
-    setExerciseTemplate([...exerciseTemplate, newExerciseName])
+const addExercise = (newExerciseName, templateObj, setTemplateObj) => {
+    let newTemplateObj = JSON.parse(JSON.stringify(templateObj)) // TODO: find a better way to deep copy (or avoid altogether)
+    newTemplateObj.exercises = [...newTemplateObj.exercises, newExerciseName] // TODO: implement exercise with ids instead
+    setTemplateObj(newTemplateObj)
 }
 
-const ExerciseSelection = ({item, exerciseTemplate, setExerciseTemplate}) => {
+const ExerciseSelection = ({item, templateObj, setTemplateObj}) => {
     const {name} = item
     return (
         <View>
             <Text>{name}</Text>
             <Button 
                 title="Add exercise"
-                onPress={() => {addExercise(name, exerciseTemplate, setExerciseTemplate)}}
+                onPress={() => {addExercise(name, templateObj, setTemplateObj)}}
             />
         </View>
     )
 }
 
-const onSaveTemplate = (template, navigation) => {
+const onSaveTemplate = (templateObj, navigation) => {
     getData("templates")
         .then((templatesList) => {
-            return [...templatesList, template]
+            return [...templatesList, templateObj]
         })
         .then((newTemplatesList) => {
             //console.log("new templates list:", newTemplatesList)
@@ -34,28 +37,49 @@ const onSaveTemplate = (template, navigation) => {
 }
 
 const NewTemplateForm = ({navigation}) => {
-    const [exerciseTemplate, setExerciseTemplate] = useState([])
+    const [templateObj, setTemplateObj] = useState({})
     const [exerciseList, setExerciseList] = useState([])
 
     useEffect(() => {
         getData("exercises")
             .then((val) => setExerciseList(val))
+        
+        let newTemplateObj = JSON.parse(JSON.stringify(templateObj))
+
+        console.log(templateObj.exercises)
+        if (!templateObj.exercises) {
+            newTemplateObj = {...newTemplateObj, exercises: []}
+        }
+        if (!templateObj.id) {
+            // TODO: add id function
+            newTemplateObj = {...newTemplateObj, id: 1}
+        }
+        if (!templateObj.name) {
+            newTemplateObj = {...newTemplateObj, name: ''}
+        }
+        setTemplateObj(newTemplateObj)
     }, [])
 
-    useEffect(() => console.log("template updated:", exerciseTemplate), [exerciseTemplate])
+    useEffect(() => console.log("template updated:", templateObj), [templateObj])
 
     return (
         <View>
-            <Text style={styles.title}>Exercise List</Text>
+            <Text style={styles.title}>Template Name</Text>
+            <TextInput
+                placeholder="Set a template name"
+                value={templateObj.name}
+                onChangeText={(text) => setTemplateObj({...templateObj, name: text})}
+             />
 
+            <Text style={styles.title}>Exercise List</Text>
             <FlatList 
                 data = {exerciseList}
                 renderItem = {({item}) => {
                     return (
                         <ExerciseSelection 
                             item={item} 
-                            exerciseTemplate={exerciseTemplate} 
-                            setExerciseTemplate={setExerciseTemplate} 
+                            templateObj={templateObj} 
+                            setTemplateObj={setTemplateObj} 
                         />
                     )
                 }}
@@ -63,13 +87,13 @@ const NewTemplateForm = ({navigation}) => {
 
             <Text style={styles.title}>Added Exercises</Text>
             <FlatList
-                data={exerciseTemplate}
+                data={templateObj.exercises}
                 renderItem={({item}) => <Text>{item}</Text>}
             />
 
             <Button 
                 title="Save template"
-                onPress={() => onSaveTemplate(exerciseTemplate, navigation)}
+                onPress={() => onSaveTemplate(templateObj, navigation)}
             />
         </View>
     )
