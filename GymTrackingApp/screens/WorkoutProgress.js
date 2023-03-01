@@ -135,13 +135,17 @@ const WorkoutProgress = ({navigation}) => {
     }
 
     return (
-        <View>
+        <View style={styles.dividerContainer}>
             <FlatList
                 data={selectedExercises}
                 renderItem={({item}) => {
                     const exercise = findReferenceExercise(referenceExercises, item)
                     return(<Exercise exercise={exercise}/>)
                 }}
+            />
+            <Button
+                title="Finish workout"
+                onPress={() => navigation.navigate("MainMenu")}
             />
         </View>
     )

@@ -10,24 +10,25 @@ const onSelectTemplate = (navigation, exercises) => {
     navigation.navigate("WorkoutProgress", {exercises: exercises})
 }
 
-const TemplateSelection = ({navigation, exercises}) => {
+const TemplateSelection = ({navigation, templateObj}) => {
     return (
-        <View>
+        <View style={styles.template}>
+            <Text style={styles.itemtitle}>{templateObj.name}</Text>
             <FlatList
-                data={exercises}
-                renderItem={({item}) => <Text style={styles.subtext2}>{item}</Text>}
+                data={templateObj.exercises}
+                renderItem={({item}) => <Text style={styles.subtext}>{item}</Text>}
             />
             <Button 
                 title="Select Template"
-                onPress={() => onSelectTemplate(navigation, exercises)}
+                onPress={() => onSelectTemplate(navigation, templateObj.exercises)}
             />
         </View>
     )
 }
 
-const renderTemplate = (navigation, template) => {
+const renderTemplate = (navigation, templateObj) => {
     return (
-        <TemplateSelection navigation={navigation} exercises={template} />
+        <TemplateSelection navigation={navigation} templateObj={templateObj} />
     )
 }
 
@@ -41,6 +42,7 @@ const SelectTemplate = ({navigation}) => {
     
     return (
         <View>
+            <Text style={styles.title}>Templates</Text>
             <FlatList
                 data={templates}
                 renderItem={({item}) => renderTemplate(navigation, item)}
