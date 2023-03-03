@@ -13,7 +13,7 @@ const addExercise = (newExerciseName, templateObj, setTemplateObj) => {
 const ExerciseSelection = ({item, templateObj, setTemplateObj}) => {
     const {name} = item
     return (
-        <View>
+        <View style={{flex: 1, flexDirection: "row", justifyContent: "space-between"}}>
             <Text style={styles.subtext}>{name}</Text>
             <Button 
                 title="Add exercise"
@@ -34,6 +34,27 @@ const onSaveTemplate = (templateObj, navigation) => {
         })
         .then(() => navigation.navigate("Exercise Template List"))
 
+}
+
+const ExerciseList = ({exerciseList, templateObj, setTemplateObj}) => {
+    return (
+        <View>
+            <Text style={styles.title}>Exercise List</Text>
+
+            <FlatList 
+                data = {exerciseList}
+                renderItem = {({item}) => {
+                    return (
+                        <ExerciseSelection 
+                            item={item} 
+                            templateObj={templateObj} 
+                            setTemplateObj={setTemplateObj} 
+                        />
+                    )
+                }}
+            />
+        </View>
+    )
 }
 
 const NewTemplateForm = ({navigation}) => {
@@ -73,19 +94,7 @@ const NewTemplateForm = ({navigation}) => {
                 onChangeText={(text) => setTemplateObj({...templateObj, name: text})}
              />
 
-            <Text style={styles.title}>Exercise List</Text>
-            <FlatList 
-                data = {exerciseList}
-                renderItem = {({item}) => {
-                    return (
-                        <ExerciseSelection 
-                            item={item} 
-                            templateObj={templateObj} 
-                            setTemplateObj={setTemplateObj} 
-                        />
-                    )
-                }}
-            />
+            <ExerciseList exerciseList={exerciseList} templateObj={templateObj} setTemplateObj={setTemplateObj} />
 
             <Text style={styles.title}>Added Exercises</Text>
             <FlatList
