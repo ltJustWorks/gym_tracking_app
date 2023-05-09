@@ -19,7 +19,17 @@ const initData = () => {
                 saveData("templates", [])
                 console.log("template data initialized")
             }
+        }
+    )
+
+    getData("workout_history")
+        .then((val) => {
+            if (!val) {
+                saveData("workout_history", {})
+                console.log("workout history data initialized")
+            }
         })
+    
 }
 
 const MainMenu = ({navigation}) => {
@@ -37,6 +47,10 @@ const MainMenu = ({navigation}) => {
         <Button
             title="Exercise list"
             onPress={() => navigation.navigate("Exercise List")}
+        />
+        <Button
+            title="Workout History"
+            onPress={() => navigation.navigate("Workout History")}
         />
     </View>
 }

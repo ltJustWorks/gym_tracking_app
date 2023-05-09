@@ -1,74 +1,59 @@
 import React, { useState, useEffect } from 'react'
-import { View, FlatList, Text, Button } from 'react-native'
+import { View, FlatList, Text, TextInput, TouchableOpacity, Button } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
-import { getData, saveData } from '../storage/dataHelper'
 import styles from '../styles/styles'
+const exercisesList = require('../data/exercises/exercises.json')
 
-const onRemoveExercise = (exerciseName, exerciseList, setExerciseList) => {
-    let newExerciseList = JSON.parse(JSON.stringify(exerciseList))
-    const updatedList = newExerciseList.filter(exercise => exercise.name !== exerciseName)
-    saveData("exercises", updatedList)
-        .then(setExerciseList(updatedList))
-        .catch(e => console.error(e))
-}
-
-const ExerciseItem = ({name, sets, reps, weight, exerciseList, setExerciseList}) => {
+const ExerciseItem = ({exerciseObj, navigation}) => {
+    // show exercise name and image, item is also pressable button to view more details about exercise
     return (
-        <View style={styles.exerciseContainer}>
-            <Text style={styles.itemtitle}>{name}</Text>
-            <Text style={styles.subtext}>{sets} sets</Text>
-            <Text style={styles.subtext}>{reps} reps</Text>
-            <Text style={styles.subtext}>{weight} lbs</Text>
-            <Button
-                title="Remove exercise"
-                onPress={() => onRemoveExercise(name, exerciseList, setExerciseList)} //TODO: Reimplement with id instead
-            />
-        </View>
+        <TouchableOpacity 
+            style={styles.exerciseItemButton}
+            onPress={() => navigation.navigate("View Exercise", {exercise: exerciseObj})}
+        >
+            <Text style={styles.subtext}>{exerciseObj.name}</Text>
+        </TouchableOpacity>
     )
 }
 
-const renderExerciseItem = (item, exerciseList, setExerciseList) => {
+const renderExerciseItem = (item, navigation) => {
     return (
         <ExerciseItem 
-            name={item.name} 
-            sets={item.sets} 
-            reps={item.reps}
-            weight={item.weight}
-            exerciseList={exerciseList}
-            setExerciseList={setExerciseList}
+            exerciseObj={item} 
+            navigation={navigation}
         />
     )
 }
 
-const NewExerciseButton = ({navigation}) => {
-    return (
-            <Button
-                title="Add New Exercise"
-                onPress={() => {navigation.navigate("New Exercise Form")}}
-            />
-    )
+const handleLoadMore = (visibleSize, setVisibleSize, filteredExerciseList, setVisibleExercises) => {
+    setVisibleSize(visibleSize + 20)
+    reload(visibleSize, filteredExerciseList, setVisibleExercises)
+}
+
+const reload = (visibleSize, filteredExerciseList, setVisibleExercises) => {
+    setVisibleExercises(filteredExerciseList.slice(0, visibleSize))
+}
+
+const onChangeSearch = (text, filteredExerciseList, setFilteredExerciseList, visibleSize, setVisibleSize, setVisibleExercises) => {
+    setVisibleSize(10)
+    const newFilteredList = exercisesList.filter(item => item.name.toLowerCase().includes(text.toLowerCase()))
+    setFilteredExerciseList(newFilteredList)
+    reload(visibleSize, newFilteredList, setVisibleExercises)
 }
 
 const ExerciseList = ({navigation}) => {
-    const isFocused = useIsFocused()
-    const [exerciseList, setExerciseList] = useState([])
-
-    useEffect(() => {
-        getData("exercises")
-        .then((val) => {
-            console.log("exercise list:", val)
-            setExerciseList(val)
-        })
-    }, [isFocused])
+    const exerciseList = exercisesList
+    const [filteredExerciseList, setFilteredExerciseList] = useState([])
+    const [visibleExercises, setVisibleExercises] = useState([])
+    const [visibleSize, setVisibleSize] = useState(20)
 
     if (exerciseList.length === 0) {
         return (
             <View style={styles.dividerContainer}>
                 <View>
                     <Text style={styles.title}>Exercises</Text>
-                    <Text style={styles.subtext}>No exercises, add some to start</Text>
+                    <Text style={styles.subtext}>Error loading exercises.</Text>
                 </View>
-                <NewExerciseButton navigation={navigation} />
             </View>
         )
     }
@@ -76,11 +61,20 @@ const ExerciseList = ({navigation}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Exercises</Text>
-            <FlatList
-                data={exerciseList}
-                renderItem={({item}) => renderExerciseItem(item, exerciseList, setExerciseList)}
+            <TextInput 
+                style={styles.itemtitle}
+                placeholder="Search"
+                onChangeText={text => onChangeSearch(text, filteredExerciseList, setFilteredExerciseList, visibleSize, setVisibleSize, setVisibleExercises)}
             />
-            <NewExerciseButton navigation={navigation} />
+            <FlatList
+                data={visibleExercises}
+                renderItem={({item}) => renderExerciseItem(item, navigation)}
+            />
+            <TouchableOpacity onPress={() => handleLoadMore(visibleSize, setVisibleSize, filteredExerciseList, setVisibleExercises)}>
+                <Text style={styles.subtext}>Load more</Text>
+            </TouchableOpacity>
+
+            
         </View>
     )
 }

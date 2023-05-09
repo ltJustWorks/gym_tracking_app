@@ -35,12 +35,8 @@ New templates form:
     }
 ]
 
-adding an exercise:
-* get jsonified exercise list and parse (check if list)
-* append new exercise object to list
-* save new exercise list under same key
-
 */
+
 const saveData = async (key, value) => {
     try {
         const jsonValue = JSON.stringify(value)

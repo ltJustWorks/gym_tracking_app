@@ -18,7 +18,8 @@ const styles = StyleSheet.create(
             fontSize: 25
         },
         subtext: {
-            fontSize: 20 
+            fontSize: 20,
+            flexWrap: "wrap"
         },
         subtext2: {
             fontSize: 18
@@ -42,6 +43,10 @@ const styles = StyleSheet.create(
         dividerContainer: {
             flex: 1,
             justifyContent: "space-between"
+        },
+        exerciseItemButton: {
+            flex: 1,
+            justifyContent: "flex-start"
         }
     }
 )
