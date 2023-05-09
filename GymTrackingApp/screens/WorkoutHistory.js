@@ -69,9 +69,9 @@ const HistoryChart = ({exercise, historyData}) => {
                 height={220}
                 yAxisSuffix=" lbs"
                 chartConfig={{
-                    backgroundColor: "#e26a00",
-                    backgroundGradientFrom: '#fb8c00',
-                    backgroundGradientTo: '#ffa726',
+                    backgroundColor: "#2196f3",
+                    backgroundGradientFrom: '#2196f3',
+                    backgroundGradientTo: '#2196f3',
                     decimalPlaces: 0,
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,

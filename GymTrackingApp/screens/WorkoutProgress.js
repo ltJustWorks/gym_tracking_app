@@ -87,6 +87,9 @@ const addSet = (sets, changeSets) => {
 const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
     const isFocused = useIsFocused()
 
+    const [lastWeight, setLastWeight] = useState('')
+    const [lastReps, setLastReps] = useState('')
+
     let sets = workoutObj[exercise]
     const changeSets = (newSets) => {
         const newWorkoutObj = Object.fromEntries(
@@ -149,6 +152,8 @@ const WorkoutProgress = ({navigation}) => {
     console.log(selectedExercises)
 
     const [workoutObj, setWorkoutObj] = useState({})
+
+    useEffect(() => {console.log("marker", workoutObj)}, [])
 
     /* 
         {

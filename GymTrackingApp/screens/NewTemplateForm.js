@@ -29,6 +29,10 @@ const ExerciseSelection = ({item, templateObj, setTemplateObj}) => {
 }
 
 const onSaveTemplate = (templateObj, navigation) => {
+    if (templateObj.name === "") {
+        Alert.alert("Error", "Add a template name.")
+        return
+    }
     getData("templates")
         .then((templatesList) => {
             return [...templatesList, templateObj]
