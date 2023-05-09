@@ -45,15 +45,16 @@ const reload = (setVisibleList, filteredList, visibleSize) => {
     setVisibleList(filteredList.slice(0, visibleSize))
 }
 
-const handleSearch = (text, setFilteredList, setVisibleList, filteredList, visibleSize) => {
+const handleSearch = (text, setFilteredList, setVisibleList, setVisibleSize) => {
+    setVisibleSize(5)
     const newFilteredList = exercisesList.filter(item => item.name.toLowerCase().includes(text.toLowerCase()))
     setFilteredList(newFilteredList)
-    reload(setVisibleList, newFilteredList, visibleSize)
+    reload(setVisibleList, newFilteredList, 5)
 }
 
 const handleViewMore = (visibleSize, setVisibleSize, setVisibleList, filteredList) => {
     setVisibleSize(visibleSize + 5)
-    reload(setVisibleList, filteredList, visibleSize)
+    reload(setVisibleList, filteredList, visibleSize + 5)
 }
 
 const ExerciseList = ({exerciseList, templateObj, setTemplateObj}) => {
@@ -62,12 +63,12 @@ const ExerciseList = ({exerciseList, templateObj, setTemplateObj}) => {
     const [filteredList, setFilteredList] = useState([])
 
     return (
-        <View style={{height:320}}>
+        <View style={{maxHeight: "45%"}}>
             <Text style={styles.title}>Exercise List</Text>
 
             <TextInput 
                 placeholder="Search"
-                onChangeText={(text) => handleSearch(text, setFilteredList, setVisibleList, filteredList, visibleSize)}
+                onChangeText={(text) => handleSearch(text, setFilteredList, setVisibleList, setVisibleSize)}
             />
 
             <FlatList 
@@ -81,7 +82,6 @@ const ExerciseList = ({exerciseList, templateObj, setTemplateObj}) => {
                         />
                     )
                 }}
-                contentContainerStyle={{flexGrow:1}}
             />
             
             <TouchableOpacity onPress={() => handleViewMore(visibleSize, setVisibleSize, setVisibleList, filteredList)}>
@@ -119,15 +119,18 @@ const NewTemplateForm = ({navigation}) => {
 
     return (
         <View style={{flex:1}}>
+            <View>
             <Text style={styles.title}>Template Name</Text>
             <TextInput
                 placeholder="Set a template name"
                 value={templateObj.name}
                 onChangeText={(text) => setTemplateObj({...templateObj, name: text})}
              />
+             </View>
 
             <ExerciseList exerciseList={exerciseList} templateObj={templateObj} setTemplateObj={setTemplateObj} />
 
+            <View style={{flex: 1}}> 
             <Text style={styles.title}>Added Exercises</Text>
             <FlatList
                 data={templateObj.exercises}
@@ -138,6 +141,7 @@ const NewTemplateForm = ({navigation}) => {
                 title="Save template"
                 onPress={() => onSaveTemplate(templateObj, navigation)}
             />
+            </View>
         </View>
     )
 }
