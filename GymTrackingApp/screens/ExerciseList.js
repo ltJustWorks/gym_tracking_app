@@ -27,7 +27,7 @@ const renderExerciseItem = (item, navigation) => {
 
 const handleLoadMore = (visibleSize, setVisibleSize, filteredExerciseList, setVisibleExercises) => {
     setVisibleSize(visibleSize + 20)
-    reload(visibleSize, filteredExerciseList, setVisibleExercises)
+    reload(visibleSize + 20, filteredExerciseList, setVisibleExercises)
 }
 
 const reload = (visibleSize, filteredExerciseList, setVisibleExercises) => {

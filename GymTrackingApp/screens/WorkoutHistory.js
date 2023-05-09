@@ -62,7 +62,7 @@ const formatLabels = (labels) => {
 const HistoryChart = ({exercise, historyData}) => {
     return (
         <View>
-            <Text>{exercise}</Text>
+            <Text style={styles.subtext}>{exercise}</Text>
             <LineChart
                 data={historyData}
                 width={350}
