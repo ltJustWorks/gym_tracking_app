@@ -64,6 +64,7 @@ const EditableSet = ({set, sets, changeSets}) => {
 }
 
 const addSet = (sets, changeSets) => {
+    console.log("marker", sets)
     let newSets = JSON.parse(JSON.stringify(sets))
     let setNum, weight, reps
     if (sets.length === 0) {
@@ -83,6 +84,8 @@ const addSet = (sets, changeSets) => {
     }]
     changeSets(newSets)
 }
+
+
 
 const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
     const isFocused = useIsFocused()
@@ -117,10 +120,6 @@ const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
 
     */ 
 
-    useEffect(() => {
-        addSet(sets, changeSets)
-    }, [isFocused])
-
     return (
         <View style={styles.template}>
             <Text style={styles.itemtitle}>{exercise}</Text>
@@ -141,6 +140,14 @@ const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
         )
 }
 
+const initializeWorkoutObj = (workoutObj, selectedExercises) => {
+    const newWorkoutObj = {}
+    for (let exercise of selectedExercises) {
+        newWorkoutObj[exercise] = [{set_no: 1, weight: 0, reps: 0}]
+    }
+    return newWorkoutObj
+}
+
 const WorkoutProgress = ({navigation}) => {
     /* Hierarchy:
     Workout Progress -> Exercise -> Editable Set
@@ -151,7 +158,7 @@ const WorkoutProgress = ({navigation}) => {
     const selectedExercises = route.params?.exercises
     console.log(selectedExercises)
 
-    const [workoutObj, setWorkoutObj] = useState({})
+    const [workoutObj, setWorkoutObj] = useState(initializeWorkoutObj({}, selectedExercises))
 
     useEffect(() => {console.log("marker", workoutObj)}, [])
 
@@ -162,17 +169,15 @@ const WorkoutProgress = ({navigation}) => {
         }
     */
 
+
+
     return (
         <View style={styles.dividerContainer}>
             <FlatList
                 data={selectedExercises}
                 renderItem={({item}) => {
                     //const newWorkoutObj = {...workoutObj, item: []}   Don't set keys with vars like this
-                    const newWorkoutObj = {...workoutObj}
-                    if (!newWorkoutObj[item]) {
-                        newWorkoutObj[item] = []
-                    }
-                    return(<Exercise exercise={item} workoutObj={newWorkoutObj} setWorkoutObj={setWorkoutObj} />)
+                    return(<Exercise exercise={item} workoutObj={workoutObj} setWorkoutObj={setWorkoutObj} />)
                 }}
             />
             <Button
