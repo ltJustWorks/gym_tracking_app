@@ -61,7 +61,7 @@ const formatLabels = (labels) => {
 
 const HistoryChart = ({exercise, historyData}) => {
     return (
-        <View>
+        <View style={{flex: 1, alignItems: "center"}}>
             <Text style={styles.subtext}>{exercise}</Text>
             <LineChart
                 data={historyData}

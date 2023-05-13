@@ -13,13 +13,12 @@ const onChangeSet = (set_no, new_weight, new_reps, sets, changeSets) => {
         } 
     }
     changeSets(new_sets)
+    console.log("marker", new_sets)
 }
 
-const EditableSet = ({set, sets, changeSets}) => {
+const EditableSet = ({set, sets, changeSets, lastWeight, lastReps, setEnteredWeight, setEnteredReps}) => {
     const [currWeight, setCurrWeight] = useState('')
     const [currReps, setCurrReps] = useState('')
-    const prevWeight = set.weight
-    const prevReps = set.reps
 
     return (
         <View>
@@ -28,10 +27,14 @@ const EditableSet = ({set, sets, changeSets}) => {
             <View style={styles.setEntry}>
                 <TextInput 
                     style={styles.subtext2}
-                    placeholder={prevWeight.toString()}
+                    placeholder={lastWeight.toString()}
                     value={currWeight}
                     keyboardType="number-pad"
-                    onChangeText={(text) => setCurrWeight(text)}
+                    onChangeText={(text) => {
+                        setCurrWeight(text)
+                        setEnteredWeight(text)
+                        onChangeSet(set.set_no, parseInt(text), set.reps, sets, changeSets)
+                }}
 
                 />
                 <Text style={styles.subtext2}>lbs</Text>
@@ -40,14 +43,18 @@ const EditableSet = ({set, sets, changeSets}) => {
             <View style={styles.setEntry}>
                 <TextInput
                     style={styles.subtext2}
-                    placeholder={prevReps.toString()}
+                    placeholder={lastReps.toString()}
                     value={currReps}
                     keyboardType="number-pad"
-                    onChangeText={(text) => setCurrReps(text)}
+                    onChangeText={(text) => {
+                        setCurrReps(text)
+                        setEnteredReps(text)
+                        onChangeSet(set.set_no, set.weight, parseInt(text), sets, changeSets)
+                    }}
                 />
                 <Text style={styles.subtext2}>Reps</Text>
             </View>
-                <Button 
+                {/*<Button 
                     title="✅" 
                     onPress={() => {
                         if (!(currWeight === '' || currReps === '')) {
@@ -57,14 +64,13 @@ const EditableSet = ({set, sets, changeSets}) => {
                             Alert.alert('Empty weight/reps', 'Please enter valid weight/reps')
                         }
                     }}
-                />
+                />*/}
             </View>
         </View>
     )
 }
 
 const addSet = (sets, changeSets) => {
-    console.log("marker", sets)
     let newSets = JSON.parse(JSON.stringify(sets))
     let setNum, weight, reps
     if (sets.length === 0) {
@@ -82,6 +88,7 @@ const addSet = (sets, changeSets) => {
         weight: weight, // TODO: Figure out how to get previous reps, sets and weight from workout history
         reps: reps
     }]
+    console.log("marker", newSets)
     changeSets(newSets)
 }
 
@@ -90,8 +97,11 @@ const addSet = (sets, changeSets) => {
 const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
     const isFocused = useIsFocused()
 
-    const [lastWeight, setLastWeight] = useState('')
-    const [lastReps, setLastReps] = useState('')
+    const [lastWeight, setLastWeight] = useState('0')
+    const [lastReps, setLastReps] = useState('0')
+
+    const [enteredWeight, setEnteredWeight] = useState('')
+    const [enteredReps, setEnteredReps] = useState('')
 
     let sets = workoutObj[exercise]
     const changeSets = (newSets) => {
@@ -130,11 +140,19 @@ const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
                         set={item} 
                         sets={sets} 
                         changeSets={changeSets} 
+                        lastWeight={lastWeight}
+                        lastReps={lastReps}
+                        setEnteredWeight={setEnteredWeight}
+                        setEnteredReps={setEnteredReps}
                     />}}
             /> 
             <Button
                 title="Add a set"
-                onPress={() => addSet(sets, changeSets)}
+                onPress={() => {
+                    addSet(sets, changeSets)
+                    setLastReps(enteredReps)
+                    setLastWeight(enteredWeight)
+                }}
             />
         </View>
         )
@@ -156,11 +174,8 @@ const WorkoutProgress = ({navigation}) => {
     */ 
     const route = useRoute()
     const selectedExercises = route.params?.exercises
-    console.log(selectedExercises)
 
     const [workoutObj, setWorkoutObj] = useState(initializeWorkoutObj({}, selectedExercises))
-
-    useEffect(() => {console.log("marker", workoutObj)}, [])
 
     /* 
         {
@@ -189,16 +204,15 @@ const WorkoutProgress = ({navigation}) => {
 }
 
 const onFinishWorkout = (workoutObj, navigation) => {
-    console.log("marker", workoutObj)
+    console.log("marker 2", workoutObj)
     getData("workout_history")
         .then((res) => {
-            /* 
-                historyObj: 
-                {
-                    <Date object>: {exercise: [{reps: .., set_no: .., weight: ..}], ...},
-                    ...
-                }
-            */
+            // 
+            //    historyObj: 
+            //    {
+            //        <Date object>: {exercise: [{reps: .., set_no: .., weight: ..}], ...},
+            //        ...
+            //    }
 
             let newHistoryObj
             if (!res) {
@@ -209,7 +223,6 @@ const onFinishWorkout = (workoutObj, navigation) => {
             }
             const date = new Date()
             newHistoryObj[date.toISOString()] = workoutObj // use Date.parse() to get back Date obj
-            console.log("marker", newHistoryObj)
             return newHistoryObj
         })
         .then((newHistoryObj) => {
