@@ -1,6 +1,6 @@
 import { useIsFocused, useRoute } from "@react-navigation/native"
 import React, { useState, useEffect } from "react"
-import { View, FlatList, TextInput, Button, Text, Alert } from "react-native"
+import { View, FlatList, TextInput, Button, Text, TouchableOpacity, Alert } from "react-native"
 import { getData, saveData } from "../storage/dataHelper"
 import { LineChart } from 'react-native-chart-kit'
 import styles from "../styles/styles"
@@ -89,8 +89,16 @@ const HistoryChart = ({exercise, historyData}) => {
     )
 }
 
+const onChangeSearch = (search, setVisibleSize, setVisiblePairs, historyPairs) => {
+    setVisibleSize(5)
+    setVisiblePairs(historyPairs.filter(([exercise, _]) => exercise.toLowerCase().includes(search.toLowerCase())))
+}
+
 const WorkoutHistory = () => {
     const [historyPairs, setHistoryPairs] = useState([]) // [[exercise_name, history_obj],...]
+    const [visiblePairs, setVisiblePairs] = useState([])
+    const [visibleSize, setVisibleSize] = useState(5)
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
 
@@ -121,17 +129,27 @@ const WorkoutHistory = () => {
     }
     else {
         return (
-            <View>
+            <View style={{flex:1}}>
+                <TextInput 
+                    style={styles.itemtitle}
+                    placeholder="Search"
+                    onChangeText={(text) => onChangeSearch(text, setVisibleSize, setVisiblePairs, historyPairs)}
+                />
+                <View style={{flex:1}}>
                 <FlatList
-                    data={historyPairs}
+                    data={visiblePairs}
                     renderItem={({item}) => {
                     return (
                         <View>
                             <HistoryChart exercise={item[0]} historyData={item[1]} />
                         </View>
-                    )
-                }}
+                    )}}
+                    ListEmptyComponent={() => <Text style={styles.subtext}>No exercises found.</Text>}
                 />
+                </View>
+                <TouchableOpacity>
+                    <Text style={styles.subtext}>Load more</Text>
+                </TouchableOpacity>
             </View>
         )
     }
