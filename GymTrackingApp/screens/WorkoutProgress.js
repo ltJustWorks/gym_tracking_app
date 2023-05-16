@@ -1,17 +1,28 @@
 import { useIsFocused, useRoute } from "@react-navigation/native"
 import React, { useState, useEffect } from "react"
-import { View, FlatList, TextInput, Button, Text, Alert } from "react-native"
+import { View, FlatList, TextInput, Button, Text, Alert, TouchableOpacity } from "react-native"
 import { getData, saveData } from "../storage/dataHelper"
 import styles from "../styles/styles"
 
 const onChangeSet = (set_no, new_weight, new_reps, sets, changeSets) => {
     new_sets = JSON.parse(JSON.stringify(sets))
-    for (s of new_sets) {
+    for (let s of new_sets) {
         if (s.set_no === set_no) {
             s.weight = new_weight
             s.reps = new_reps
         } 
     }
+    changeSets(new_sets)
+}
+
+const onRemoveSet = (set_no, sets, changeSets) => {
+    let new_sets = sets.filter((set) => set["set_no"] !== set_no)
+    new_sets = new_sets.map((set) => {
+        if (set["set_no"] > set_no) {
+            return {...set, set_no: set["set_no"]-1}
+        }
+        else {return set}
+    })
     changeSets(new_sets)
     console.log("marker", new_sets)
 }
@@ -21,52 +32,54 @@ const EditableSet = ({set, sets, changeSets, lastWeight, lastReps, setEnteredWei
     const [currReps, setCurrReps] = useState('')
 
     return (
-        <View>
+            <View>
             <Text style={styles.subtext}>Set {set.set_no}</Text>
-            <View style={styles.setRow}>
-            <View style={styles.setEntry}>
-                <TextInput 
-                    style={styles.subtext2}
-                    placeholder={lastWeight.toString()}
-                    value={currWeight}
-                    keyboardType="number-pad"
-                    onChangeText={(text) => {
-                        setCurrWeight(text)
-                        setEnteredWeight(text)
-                        onChangeSet(set.set_no, parseInt(text), set.reps, sets, changeSets)
-                }}
-
-                />
-                <Text style={styles.subtext2}>lbs</Text>
-            </View>
-
-            <View style={styles.setEntry}>
-                <TextInput
-                    style={styles.subtext2}
-                    placeholder={lastReps.toString()}
-                    value={currReps}
-                    keyboardType="number-pad"
-                    onChangeText={(text) => {
-                        setCurrReps(text)
-                        setEnteredReps(text)
-                        onChangeSet(set.set_no, set.weight, parseInt(text), sets, changeSets)
+            <View style={{flex:1, flexDirection:"row", justifyContent:"space-between"}}>
+                <View style={styles.setRow}>
+                <View style={styles.setEntry}>
+                    <TextInput 
+                        style={styles.subtext2}
+                        placeholder={lastWeight.toString()}
+                        value={currWeight}
+                        keyboardType="number-pad"
+                        onChangeText={(text) => {
+                            setCurrWeight(text)
+                            setEnteredWeight(text)
+                            onChangeSet(set.set_no, parseInt(text), set.reps, sets, changeSets)
                     }}
-                />
-                <Text style={styles.subtext2}>Reps</Text>
+
+                    />
+                    <Text style={styles.subtext2}>lbs</Text>
+                </View>
+
+                <View style={styles.setEntry}>
+                    <TextInput
+                        style={styles.subtext2}
+                        placeholder={lastReps.toString()}
+                        value={currReps}
+                        keyboardType="number-pad"
+                        onChangeText={(text) => {
+                            setCurrReps(text)
+                            setEnteredReps(text)
+                            onChangeSet(set.set_no, set.weight, parseInt(text), sets, changeSets)
+                        }}
+                    />
+                    <Text style={styles.subtext2}>Reps</Text>
+                </View>
             </View>
-                {/*<Button 
-                    title="✅" 
+                <TouchableOpacity 
+                    style={{flex:1, flexGrow:1, flexDirection:"row", justifyContent:"flex-end", alignItems:"center",}} 
                     onPress={() => {
-                        if (!(currWeight === '' || currReps === '')) {
-                            onChangeSet(set.set_no, parseInt(currWeight), parseInt(currReps), sets, changeSets)
+                        if (sets.length === 1) {
+                            Alert.alert("Error", "You can't remove the first set.")
                         }
-                        else {
-                            Alert.alert('Empty weight/reps', 'Please enter valid weight/reps')
-                        }
+                        else {onRemoveSet(set.set_no, sets, changeSets)}
                     }}
-                />*/}
+                >
+                    <Text>❌</Text>
+                </TouchableOpacity>
             </View>
-        </View>
+            </View>
     )
 }
 
@@ -149,9 +162,15 @@ const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
             <Button
                 title="Add a set"
                 onPress={() => {
-                    addSet(sets, changeSets)
-                    setLastReps(enteredReps)
-                    setLastWeight(enteredWeight)
+                    if (!enteredReps || !enteredWeight) {
+                        Alert.alert("Error", "Please enter a valid weight/reps.")
+                    }
+                    else {
+                        addSet(sets, changeSets)
+                        setLastReps(enteredReps)
+                        setLastWeight(enteredWeight)
+                        // Alert if entered weight/reps is empty
+                    }
                 }}
             />
         </View>

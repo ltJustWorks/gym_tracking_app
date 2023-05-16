@@ -34,11 +34,13 @@ const styles = StyleSheet.create(
         setEntry: {
             flex: 1,
             flexDirection: "row",
-            alignItems: "center"
+            alignItems: "center",
         },
         setRow: {
             flex: 1,
-            flexDirection: "row", 
+            flexDirection: "row",
+            justifyContent: "space-between",
+            flexGrow: 5
         },
         dividerContainer: {
             flex: 1,
