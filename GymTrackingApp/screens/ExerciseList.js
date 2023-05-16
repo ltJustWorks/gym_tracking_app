@@ -69,6 +69,7 @@ const ExerciseList = ({navigation}) => {
             <FlatList
                 data={visibleExercises}
                 renderItem={({item}) => renderExerciseItem(item, navigation)}
+                ListEmptyComponent={() => <Text style={styles.subtext}>No exercises found.</Text>}
             />
             <TouchableOpacity onPress={() => handleLoadMore(visibleSize, setVisibleSize, filteredExerciseList, setVisibleExercises)}>
                 <Text style={styles.subtext}>Load more</Text>

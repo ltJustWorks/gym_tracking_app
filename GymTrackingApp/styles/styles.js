@@ -60,7 +60,7 @@ const styles = StyleSheet.create(
             justifyContent: "center",
             backgroundColor: "#2196f3",
             margin: 25,
-            elevation: 8
+            elevation: 4
         }
     }
 )

@@ -41,25 +41,25 @@ const MainMenu = ({navigation}) => {
             style={styles.mainMenuButton}
             onPress={() => navigation.navigate("Select Template")}
         >
-            <Text style={styles.title}>Start a Workout</Text>
+            <Text style={[styles.title, {color: "white"}]}>Start a Workout</Text>
         </TouchableOpacity>
         <TouchableOpacity
             style={styles.mainMenuButton}
             onPress={() => navigation.navigate("Exercise Template List")}
         >
-            <Text style={styles.title}>Workout Template List</Text>
+            <Text style={[styles.title, {color: "white"}]}>Workout Template List</Text>
         </TouchableOpacity>
         <TouchableOpacity
             style={styles.mainMenuButton}
             onPress={() => navigation.navigate("Exercise List")}
         >
-            <Text style={styles.title}>Exercise List</Text>
+            <Text style={[styles.title, {color: "white"}]}>Exercise List</Text>
         </TouchableOpacity>
         <TouchableOpacity
             style={styles.mainMenuButton}
             onPress={() => navigation.navigate("Workout History")}
         >
-            <Text style={styles.title}>Workout History</Text>
+            <Text style={[styles.title, {color: "white"}]}>Workout History</Text>
         </TouchableOpacity>
     </View>
 }
