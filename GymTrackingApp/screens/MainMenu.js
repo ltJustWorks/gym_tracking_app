@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
-import { View, Button } from "react-native"
+import { View, Text, TouchableOpacity } from "react-native"
 import { saveData, getData } from "../storage/dataHelper"
+import styles from "../styles/styles"
 
 const initData = () => {
     getData("exercises")
@@ -35,23 +36,31 @@ const initData = () => {
 const MainMenu = ({navigation}) => {
     useEffect(() => initData(), [])
 
-    return <View>
-        <Button
-            title="Start a workout"
+    return <View style={styles.mainMenu}>
+        <TouchableOpacity
+            style={styles.mainMenuButton}
             onPress={() => navigation.navigate("Select Template")}
-        />
-        <Button
-            title="Workout template list"
+        >
+            <Text style={styles.title}>Start a Workout</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            style={styles.mainMenuButton}
             onPress={() => navigation.navigate("Exercise Template List")}
-        />
-        <Button
-            title="Exercise list"
+        >
+            <Text style={styles.title}>Workout Template List</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            style={styles.mainMenuButton}
             onPress={() => navigation.navigate("Exercise List")}
-        />
-        <Button
-            title="Workout History"
+        >
+            <Text style={styles.title}>Exercise List</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            style={styles.mainMenuButton}
             onPress={() => navigation.navigate("Workout History")}
-        />
+        >
+            <Text style={styles.title}>Workout History</Text>
+        </TouchableOpacity>
     </View>
 }
 

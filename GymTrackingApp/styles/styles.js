@@ -49,6 +49,18 @@ const styles = StyleSheet.create(
         exerciseItemButton: {
             flex: 1,
             justifyContent: "flex-start"
+        },
+        mainMenu: {
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "space-around"
+        },
+        mainMenuButton: {
+            flex: 1,
+            justifyContent: "center",
+            backgroundColor: "#2196f3",
+            margin: 25,
+            elevation: 8
         }
     }
 )
