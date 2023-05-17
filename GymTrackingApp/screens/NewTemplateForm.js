@@ -74,7 +74,7 @@ const ExerciseList = ({exerciseList, templateObj, setTemplateObj}) => {
 
             <TextInput 
                 placeholder="Search"
-                style={styles.subtext}
+                style={[styles.subtext, {backgroundColor:"#eaeaea", borderRadius:20}]}
                 onChangeText={(text) => handleSearch(text, setFilteredList, setVisibleList, setVisibleSize)}
             />
 
