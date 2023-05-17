@@ -18,12 +18,14 @@ const addExercise = (newExerciseName, templateObj, setTemplateObj) => {
 const ExerciseSelection = ({item, templateObj, setTemplateObj}) => {
     const {name} = item
     return (
-        <View style={{flex: 1, flexDirection: "row", justifyContent: "space-between"}}>
+        <View style={{flex: 1, flexDirection: "row", alignItems:"center", padding:4}}>
             <Text style={{flex:1, flexWrap: 'wrap', fontSize: 20}}>{name}</Text>
+            <View style={{borderWidth:0, borderRadius:10, overflow:"hidden"}}>
             <Button 
                 title="Add exercise"
                 onPress={() => {addExercise(name, templateObj, setTemplateObj)}}
             />
+            </View>
         </View>
     )
 }
@@ -72,9 +74,12 @@ const ExerciseList = ({exerciseList, templateObj, setTemplateObj}) => {
 
             <TextInput 
                 placeholder="Search"
+                style={styles.subtext}
                 onChangeText={(text) => handleSearch(text, setFilteredList, setVisibleList, setVisibleSize)}
             />
 
+            {// TODO: Add fading edge to list
+            }
             <FlatList 
                 data = {visibleList}
                 renderItem = {({item}) => {
@@ -89,7 +94,7 @@ const ExerciseList = ({exerciseList, templateObj, setTemplateObj}) => {
             />
             
             <TouchableOpacity onPress={() => handleViewMore(visibleSize, setVisibleSize, setVisibleList, filteredList)}>
-                <Text>Load more</Text>
+                <Text style={styles.subtext2}>Load more</Text>
             </TouchableOpacity>
 
         </View>
@@ -129,6 +134,7 @@ const NewTemplateForm = ({navigation}) => {
                 placeholder="Set a template name"
                 value={templateObj.name}
                 onChangeText={(text) => setTemplateObj({...templateObj, name: text})}
+                style={styles.subtext}
              />
              </View>
 
