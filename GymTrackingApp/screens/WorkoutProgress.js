@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import { View, FlatList, TextInput, Button, Text, Alert, TouchableOpacity } from "react-native"
 import { getData, saveData } from "../storage/dataHelper"
 import styles from "../styles/styles"
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const onChangeSet = (set_no, new_weight, new_reps, sets, changeSets) => {
     new_sets = JSON.parse(JSON.stringify(sets))
@@ -32,7 +33,7 @@ const EditableSet = ({set, sets, changeSets, lastWeight, lastReps, setEnteredWei
     const [currReps, setCurrReps] = useState('')
 
     return (
-            <View>
+            <View style={{padding:5, backgroundColor:"#c0c3c6", borderRadius:20, margin:4}}>
             <Text style={styles.subtext}>Set {set.set_no}</Text>
             <View style={{flex:1, flexDirection:"row", justifyContent:"space-between"}}>
                 <View style={styles.setRow}>
@@ -68,7 +69,8 @@ const EditableSet = ({set, sets, changeSets, lastWeight, lastReps, setEnteredWei
                 </View>
             </View>
                 <TouchableOpacity 
-                    style={{flex:1, flexGrow:1, flexDirection:"row", justifyContent:"flex-end", alignItems:"center",}} 
+                    style={{flex:1, flexGrow:1, flexDirection:"row", 
+                    justifyContent:"flex-end", alignItems:"center", padding:10}} 
                     onPress={() => {
                         if (sets.length === 1) {
                             Alert.alert("Error", "You can't remove the first set.")
@@ -76,7 +78,9 @@ const EditableSet = ({set, sets, changeSets, lastWeight, lastReps, setEnteredWei
                         else {onRemoveSet(set.set_no, sets, changeSets)}
                     }}
                 >
-                    <Text>❌</Text>
+                    <Icon name='close'
+                        size={20} color="#fc0303"
+                    />
                 </TouchableOpacity>
             </View>
             </View>
@@ -159,6 +163,7 @@ const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
                         setEnteredReps={setEnteredReps}
                     />}}
             /> 
+            <View style={{borderRadius:20, overflow:"hidden"}}>
             <Button
                 title="Add a set"
                 onPress={() => {
@@ -173,6 +178,7 @@ const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
                     }
                 }}
             />
+            </View>
         </View>
         )
 }
@@ -214,10 +220,12 @@ const WorkoutProgress = ({navigation}) => {
                     return(<Exercise exercise={item} workoutObj={workoutObj} setWorkoutObj={setWorkoutObj} />)
                 }}
             />
+            <View style={{borderRadius:20, overflow:"hidden", margin:4, backgroundColor:'transparent'}}>
             <Button
                 title="Finish workout"
                 onPress={() => onFinishWorkout(workoutObj, navigation)}
             />
+            </View>
         </View>
     )
 }

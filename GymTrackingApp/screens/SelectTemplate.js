@@ -18,10 +18,12 @@ const TemplateSelection = ({navigation, templateObj}) => {
                 data={templateObj.exercises}
                 renderItem={({item}) => <Text style={styles.subtext}>{item}</Text>}
             />
+            <View style={{borderRadius:20, overflow:"hidden"}}>
             <Button 
                 title="Select Template"
                 onPress={() => onSelectTemplate(navigation, templateObj.exercises)}
             />
+            </View>
         </View>
     )
 }

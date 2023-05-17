@@ -20,10 +20,12 @@ const Template = ({templateObj, templateList, setTemplateList}) => {
                 data={templateObj.exercises}
                 renderItem={({item}) => <Text style={styles.subtext}>{item}</Text>}
             />
+            <View style={{borderRadius:20, overflow:"hidden"}}>
             <Button
                 title="Delete Template"
                 onPress={(() => onDeleteTemplate(templateObj, templateList, setTemplateList))}
             />
+            </View>
         </View>
     )
 }
@@ -41,10 +43,12 @@ const renderTemplate = (templateObj, templateList, setTemplateList) => {
 
 const NewTemplateButton = ({navigation}) => {
     return (
+        <View style={{borderRadius:20, overflow:"hidden", margin:4}}>
         <Button 
             title="Add template"
             onPress={() => navigation.navigate("New Template Form")}
         />
+        </View>
     )
 }
 

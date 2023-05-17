@@ -174,7 +174,9 @@ const NewTemplateForm = ({navigation}) => {
                     if (templateObj.exercises.length === 0) {
                         Alert.alert("Error", "Add some exercises before saving your template.")
                     }
-                    onSaveTemplate(templateObj, navigation)
+                    else {
+                        onSaveTemplate(templateObj, navigation)
+                    }
                 }}
             /></View>
             </View>

@@ -29,12 +29,16 @@ const styles = StyleSheet.create(
         },
         template: {
             backgroundColor: "#eaeaea",
-            margin: 10
+            margin: 10,
+            borderRadius:20,
         },
         setEntry: {
             flex: 1,
             flexDirection: "row",
             alignItems: "center",
+            backgroundColor: "#dddddd",
+            borderRadius: 20,
+            margin: 4
         },
         setRow: {
             flex: 1,
