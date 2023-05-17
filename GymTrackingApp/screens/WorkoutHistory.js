@@ -63,6 +63,7 @@ const HistoryChart = ({exercise, historyData}) => {
     return (
         <View style={{flex: 1, alignItems: "center", margin:4}}>
             <Text style={styles.subtext}>{exercise}</Text>
+            <View style={{borderRadius:20, overflow:"hidden"}}>
             <LineChart
                 title={exercise}
                 data={historyData}
@@ -86,6 +87,7 @@ const HistoryChart = ({exercise, historyData}) => {
                     }
                 }}
             />
+            </View>
         </View>
     )
 }
