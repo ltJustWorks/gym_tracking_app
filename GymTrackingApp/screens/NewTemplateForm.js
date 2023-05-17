@@ -4,6 +4,7 @@ import { getData, saveData } from '../storage/dataHelper'
 //import { v4 as uuidv4 } from 'uuid'
 import styles from '../styles/styles'
 const exercisesList = require('../data/exercises/exercises.json')
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const addExercise = (newExerciseName, templateObj, setTemplateObj) => {
     let newTemplateObj = JSON.parse(JSON.stringify(templateObj)) // TODO: find a better way to deep copy (or avoid altogether)
@@ -101,6 +102,11 @@ const ExerciseList = ({exerciseList, templateObj, setTemplateObj}) => {
     )
 }
 
+const onRemoveExercise = (exercise_to_delete, templateObj, setTemplateObj) => {
+    let newTemplateObj = {...templateObj, exercises: templateObj.exercises.filter(exercise => exercise !== exercise_to_delete)}
+    setTemplateObj(newTemplateObj)
+}
+
 const NewTemplateForm = ({navigation}) => {
     const [templateObj, setTemplateObj] = useState({})
     const [exerciseList, setExerciseList] = useState(exercisesList)
@@ -144,13 +150,33 @@ const NewTemplateForm = ({navigation}) => {
             <Text style={styles.title}>Added Exercises</Text>
             <FlatList
                 data={templateObj.exercises}
-                renderItem={({item}) => <Text style={styles.subtext}>{item}</Text>}
+                renderItem={({item}) => {
+                    return (
+                        <View style={{flex:1, flexDirection:"row", alignItems:"center"}}>
+                        <Text style={{flex:1, fontSize: 20, padding:5, flexWrap:"wrap"}}>{item}</Text>
+                        <TouchableOpacity 
+                            style={{padding:10}}
+                            onPress={() => onRemoveExercise(item, templateObj, setTemplateObj)}
+                        >
+                            <Icon name='close'
+                                size={20} color="#fc0303"
+                            />
+                        </TouchableOpacity>
+                        </View>
+                    )
+                }}
+                ListEmptyComponent={() => <Text style={styles.subtext}>No exercises added.</Text>}
             />
 
-            <Button 
+            <View style={{borderRadius:20, overflow:"hidden", margin:4}}><Button 
                 title="Save template"
-                onPress={() => onSaveTemplate(templateObj, navigation)}
-            />
+                onPress={() => {
+                    if (templateObj.exercises.length === 0) {
+                        Alert.alert("Error", "Add some exercises before saving your template.")
+                    }
+                    onSaveTemplate(templateObj, navigation)
+                }}
+            /></View>
             </View>
         </View>
     )
