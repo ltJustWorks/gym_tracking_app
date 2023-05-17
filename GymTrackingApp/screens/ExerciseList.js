@@ -35,7 +35,7 @@ const reload = (visibleSize, filteredExerciseList, setVisibleExercises) => {
 }
 
 const onChangeSearch = (text, filteredExerciseList, setFilteredExerciseList, visibleSize, setVisibleSize, setVisibleExercises) => {
-    setVisibleSize(10)
+    setVisibleSize(20)
     const newFilteredList = exercisesList.filter(item => item.name.toLowerCase().includes(text.toLowerCase()))
     setFilteredExerciseList(newFilteredList)
     reload(visibleSize, newFilteredList, setVisibleExercises)

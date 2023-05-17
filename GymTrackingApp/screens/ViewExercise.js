@@ -1,8 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { View, Button, FlatList, Text, Image } from 'react-native'
+import { View, Button, FlatList, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
 import { getData, saveData } from '../storage/dataHelper'
 import styles from '../styles/styles'
 import LinearGradient from 'react-native-linear-gradient'
+import Icon from 'react-native-vector-icons/FontAwesome'
+
+const AccordionItem = ({ children, title }) => {
+  const [ expanded, setExpanded ] = useState(false);
+
+  function toggleItem() {
+    setExpanded(!expanded);
+  }
+
+  const body = <ScrollView style={{flex:1}}><Text style={{fontSize:18}}>{ children }</Text></ScrollView>;
+
+  return (
+    <View style={{flex:1}}>
+      <TouchableOpacity 
+        style={{flexDirection:"row", justifyContent:"space-between"}} 
+        onPress={ toggleItem }>
+        <Text style={styles.subtext}>{ title }</Text>
+        <Icon name={ expanded ? 'chevron-up' : 'chevron-down' }
+              size={20} color="#bbb"
+        />
+      </TouchableOpacity>
+      { expanded && body }
+    </View>
+  );
+}
 
 const ViewExercise = ({route, navigation}) => {
     const exerciseObj = route.params.exercise
@@ -15,17 +40,12 @@ const ViewExercise = ({route, navigation}) => {
     }
     
     return ( // TODO: possibly format instructions to make them easier to read
-        <View>
+        <View style={{flex:1}}>
             <Text style={styles.itemtitle}>{exerciseObj.name}</Text>
-            <Text style={styles.subtext}>Instructions</Text>
-            <LinearGradient colors={["rgba(242,242,242,255)", "rgba(242,242,242,255)", currBorderFade]}>
-                <Text 
-                    style={{fontSize: 18, height: isExpanded ? 'auto' : 100, overflow: 'hidden'}}
-                    onPress={() => toggleExpanded()}
-                >
-                    {exerciseObj.instructions}
-                </Text>
-            </LinearGradient>
+            <AccordionItem 
+                children={exerciseObj.instructions}
+                title="Instructions"
+            />
 
             {/*<FlatList 
                 data={exerciseObj.images}
