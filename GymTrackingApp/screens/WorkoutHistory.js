@@ -47,8 +47,8 @@ const exercisesInHistory = (history) => {
 
 const formatISODateStr = (ISODateStr) => {
     const date = new Date(ISODateStr)
-    const options = {month: '2-digit', day: '2-digit'}
-    return date.toLocaleDateString('en-US', options)
+    const formattedDate = date.toLocaleString("en-US", { month: "long", day: "numeric" })
+    return formattedDate
 }
 
 const formatLabels = (labels) => {
@@ -61,16 +61,17 @@ const formatLabels = (labels) => {
 
 const HistoryChart = ({exercise, historyData}) => {
     return (
-        <View style={{flex: 1, alignItems: "center"}}>
+        <View style={{flex: 1, alignItems: "center", margin:4}}>
             <Text style={styles.subtext}>{exercise}</Text>
             <LineChart
+                title={exercise}
                 data={historyData}
                 width={350}
                 height={220}
                 yAxisSuffix=" lbs"
                 chartConfig={{
                     backgroundColor: "#2196f3",
-                    backgroundGradientFrom: '#2196f3',
+                    backgroundGradientFrom: '#1a78c2',
                     backgroundGradientTo: '#2196f3',
                     decimalPlaces: 0,
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -89,9 +90,17 @@ const HistoryChart = ({exercise, historyData}) => {
     )
 }
 
-const onChangeSearch = (search, setVisibleSize, setVisiblePairs, historyPairs) => {
+const onChangeSearch = (search, setVisibleSize, setVisiblePairs, historyPairs, setSearch) => {
+    setSearch(search)
     setVisibleSize(5)
-    setVisiblePairs(historyPairs.filter(([exercise, _]) => exercise.toLowerCase().includes(search.toLowerCase())))
+    console.log("marker", historyPairs)
+    console.log("marker 2", historyPairs.filter(([exercise, _]) => exercise.toLowerCase().includes(search.toLowerCase())))
+    if (search==="") {
+        setVisiblePairs(historyPairs)
+    }
+    else {
+        setVisiblePairs(historyPairs.filter(([exercise, _]) => exercise.toLowerCase().includes(search.toLowerCase())))
+    }
 }
 
 const WorkoutHistory = () => {
@@ -99,13 +108,13 @@ const WorkoutHistory = () => {
     const [visiblePairs, setVisiblePairs] = useState([])
     const [visibleSize, setVisibleSize] = useState(5)
     const [search, setSearch] = useState('')
+    let listData
 
     useEffect(() => {
 
         getData("workout_history")
             .then((val) => {
                 const workout_history = val
-                console.log("marker", workout_history)
                 const exercises = exercisesInHistory(workout_history)
                 const pairs = []
 
@@ -117,13 +126,21 @@ const WorkoutHistory = () => {
 
                 // assuming there are exercises in history
                 setHistoryPairs(pairs)
+                setVisiblePairs(pairs)
             })
     }, [])
-    
-    if (!historyPairs || historyPairs.length === 0) {
+
+    if (!historyPairs) {
         return (
             <View>
                 <Text style={styles.subtext}>Loading...</Text>
+            </View>
+        )
+    }
+    else if (historyPairs.length === 0) {
+        return (
+            <View>
+                <Text style={styles.subtext}>No exercises found.</Text>
             </View>
         )
     }
@@ -132,8 +149,9 @@ const WorkoutHistory = () => {
             <View style={{flex:1}}>
                 <TextInput 
                     style={styles.itemtitle}
+                    value={search}
                     placeholder="Search"
-                    onChangeText={(text) => onChangeSearch(text, setVisibleSize, setVisiblePairs, historyPairs)}
+                    onChangeText={(text) => onChangeSearch(text, setVisibleSize, setVisiblePairs, historyPairs, setSearch)}
                 />
                 <View style={{flex:1}}>
                 <FlatList
@@ -144,7 +162,9 @@ const WorkoutHistory = () => {
                             <HistoryChart exercise={item[0]} historyData={item[1]} />
                         </View>
                     )}}
-                    ListEmptyComponent={() => <Text style={styles.subtext}>No exercises found.</Text>}
+                    ListEmptyComponent={() => 
+                        {if (search) {return <Text style={styles.subtext}>No exercises found.</Text>}}
+                    }
                 />
                 </View>
                 <TouchableOpacity>
