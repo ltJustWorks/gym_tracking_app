@@ -3,7 +3,6 @@ import { View, Button, FlatList, Text, ScrollView, TouchableOpacity, Image } fro
 import { getData, saveData } from '../storage/dataHelper'
 import styles from '../styles/styles'
 import LinearGradient from 'react-native-linear-gradient'
-import Icon from 'react-native-vector-icons/FontAwesome'
 import AccordionItem from '../components/AccordionItem'
 
 const ViewExercise = ({route, navigation}) => {

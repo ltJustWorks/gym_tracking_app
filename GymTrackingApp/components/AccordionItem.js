@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const AccordionItem = ({ children, title }) => {
   const [ expanded, setExpanded ] = useState(false);

@@ -4,6 +4,17 @@ import { View, FlatList, TextInput, Button, Text, TouchableOpacity, Alert } from
 import { getData, saveData } from "../storage/dataHelper"
 import { LineChart } from 'react-native-chart-kit'
 import styles from "../styles/styles"
+import AccordionItem from "../components/AccordionItem"
+
+const ExerciseSearchAccordion = ({historyPairs}) => {
+    const exercises = historyPairs.map(pair => pair[0])
+    return (
+        <AccordionItem
+            title="Search Exercises"
+            children={exercisesInHistory(exercises)}
+        />
+    )
+}
 
 const exerciseChartDataFromHistory = (history, exercise) => {
     let chartData = {
@@ -149,6 +160,7 @@ const WorkoutHistory = () => {
     else {
         return (
             <View style={{flex:1}}>
+                <ExerciseSearchAccordion historyPairs={historyPairs} />
                 <TextInput 
                     style={styles.itemtitle}
                     value={search}
