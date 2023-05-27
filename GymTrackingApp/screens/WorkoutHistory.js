@@ -8,10 +8,12 @@ import AccordionItem from "../components/AccordionItem"
 
 const ExerciseSearchAccordion = ({historyPairs}) => {
     const exercises = historyPairs.map(pair => pair[0])
+    console.log("marker", exercises)
     return (
         <AccordionItem
             title="Search Exercises"
-            children={exercisesInHistory(exercises)}
+            children={exercises}
+            flatList={true}
         />
     )
 }
