@@ -18,6 +18,16 @@ const ExerciseSearchAccordion = ({historyPairs}) => {
     )
 }
 
+const HistoryAccordion = ({historyData}) => {
+    return (
+        <AccordionItem
+            title="Workout Record"
+            children={Object.keys(historyData)}
+            flatList={true}
+        />
+    )
+}
+
 const exerciseChartDataFromHistory = (history, exercise) => {
     let chartData = {
         labels: [],
@@ -119,17 +129,18 @@ const onChangeSearch = (search, setVisibleSize, setVisiblePairs, historyPairs, s
 }
 
 const WorkoutHistory = () => {
+    const [historyData, setHistoryData] = useState([])
     const [historyPairs, setHistoryPairs] = useState([]) // [[exercise_name, history_obj],...]
     const [visiblePairs, setVisiblePairs] = useState([])
     const [visibleSize, setVisibleSize] = useState(5)
     const [search, setSearch] = useState('')
-    let listData
 
     useEffect(() => {
 
         getData("workout_history")
             .then((val) => {
                 const workout_history = val
+                setHistoryData(workout_history)
                 const exercises = exercisesInHistory(workout_history)
                 const pairs = []
 
@@ -143,6 +154,7 @@ const WorkoutHistory = () => {
                 setHistoryPairs(pairs)
                 setVisiblePairs(pairs)
             })
+            .then(() => console.log("marker", Object.keys(historyData)))
     }, [])
 
     if (!historyPairs) {
@@ -163,6 +175,7 @@ const WorkoutHistory = () => {
         return (
             <View style={{flex:1}}>
                 <ExerciseSearchAccordion historyPairs={historyPairs} />
+                <HistoryAccordion historyData={historyData} />
                 <TextInput 
                     style={styles.itemtitle}
                     value={search}
