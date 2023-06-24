@@ -162,14 +162,15 @@ const WorkoutHistory = () => {
     else {
         return (
             <View style={{flex:1}}>
+                <Text>hi</Text>
                 <ExerciseSearchAccordion historyPairs={historyPairs} />
+                <Text>hi</Text>
                 <TextInput 
                     style={styles.itemtitle}
                     value={search}
                     placeholder="Search"
                     onChangeText={(text) => onChangeSearch(text, setVisibleSize, setVisiblePairs, historyPairs, setSearch)}
                 />
-                <View style={{flex:1}}>
                 <FlatList
                     data={visiblePairs}
                     renderItem={({item}) => {
@@ -182,7 +183,6 @@ const WorkoutHistory = () => {
                         {if (search) {return <Text style={styles.subtext}>No exercises found.</Text>}}
                     }
                 />
-                </View>
                 <TouchableOpacity>
                     <Text style={styles.subtext}>Load more</Text>
                 </TouchableOpacity>
