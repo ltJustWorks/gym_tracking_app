@@ -162,9 +162,7 @@ const WorkoutHistory = () => {
     else {
         return (
             <View style={{flex:1}}>
-                <Text>hi</Text>
                 <ExerciseSearchAccordion historyPairs={historyPairs} />
-                <Text>hi</Text>
                 <TextInput 
                     style={styles.itemtitle}
                     value={search}
