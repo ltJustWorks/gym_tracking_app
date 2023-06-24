@@ -13,7 +13,7 @@ const AccordionItem = ({ children, title, flatList=false, renderItem=defaultRend
 
   const body = flatList 
     ? <View><FlatList data={children} renderItem={renderItem}/></View>
-    : <ScrollView style={{flex:1}}><Text style={{fontSize:18}}>{ children }</Text></ScrollView>
+    : <ScrollView><Text style={{fontSize:18}}>{ children }</Text></ScrollView>
 
   return (
     <View style={{margin:10, padding:5, backgroundColor:"#eaeaea"}}>
