@@ -9,9 +9,9 @@ const AccordionItem = ({ children, title, flatList=false }) => {
     setExpanded(!expanded);
   }
 
-  const body = flatlist 
-    ? <ScrollView style={{flex:1}}><Text style={{fontSize:18}}>{ children }</Text></ScrollView>
-    : <View style={{flex:1}}><FlatList data={children} renderItem={({item}) => <Text>{item}</Text>}/></View>
+  const body = flatList 
+    ? <View><FlatList data={children} renderItem={({item}) => <Text style={{fontSize:18}}>{item}</Text>}/></View>
+    : <ScrollView style={{flex:1}}><Text style={{fontSize:18}}>{ children }</Text></ScrollView>
 
   return (
     <View style={{flex:1, margin:10}}>
