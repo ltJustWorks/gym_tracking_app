@@ -7,9 +7,9 @@ import AccordionItem from "../components/AccordionItem"
 
 const Set = ({set}) => {
     return (
-        <View>
-            <Text>{set.weight} lbs</Text>
-            <Text>{set.reps} reps</Text>
+        <View style={styles.setRow}>
+            <Text style={[styles.subtext2, {padding:5}]}>{set.weight} lbs</Text>
+            <Text style={[styles.subtext2, {padding:5}]}>{set.reps} reps</Text>
         </View>
     )
 }
@@ -17,8 +17,8 @@ const Set = ({set}) => {
 const Exercise = ({exercise_name, set_list}) => {
     console.log("marker", set_list)
     return (
-        <View>
-            <Text>{exercise_name}</Text>
+        <View style={{backgroundColor:"#eaeaea", padding:2, margin:4}}>
+            <Text style={styles.subtext}>{exercise_name}</Text>
             <FlatList
                 data={set_list}
                 renderItem={({item}) => <Set set={item}/>}
