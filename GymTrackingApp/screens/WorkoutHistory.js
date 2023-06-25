@@ -11,10 +11,18 @@ const ExerciseSearchAccordion = ({historyPairs}) => {
     console.log("marker", exercises)
     return (
         <AccordionItem
-            title="Search Exercises"
+            title="Exercises Used"
             children={exercises}
             flatList={true}
         />
+    )
+}
+
+const renderHistoryDataItem = ({item}) => {
+    return (
+        <TouchableOpacity>
+            <Text style={{fontSize:18, padding:2}}>{item}</Text>
+        </TouchableOpacity>
     )
 }
 
@@ -22,8 +30,9 @@ const HistoryAccordion = ({historyData}) => {
     return (
         <AccordionItem
             title="Workout Record"
-            children={Object.keys(historyData)}
+            children={Object.keys(historyData).map(formatISODateStr)}
             flatList={true}
+            renderItem={renderHistoryDataItem}
         />
     )
 }
@@ -174,7 +183,7 @@ const WorkoutHistory = () => {
     else {
         return (
             <View style={{flex:1}}>
-                <ExerciseSearchAccordion historyPairs={historyPairs} />
+                {/*<ExerciseSearchAccordion historyPairs={historyPairs} />*/}
                 <HistoryAccordion historyData={historyData} />
                 <TextInput 
                     style={styles.itemtitle}
