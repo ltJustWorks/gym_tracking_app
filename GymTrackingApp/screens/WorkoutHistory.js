@@ -23,20 +23,20 @@ const renderHistoryDataItem = (props, navigation) => {
     const date = item[0]
     return (
         <TouchableOpacity
-            onPress={navigation.navigate("View Workout Record")}
+            onPress={() => navigation.navigate("View Workout Record")}
         >
             <Text style={{fontSize:18, padding:2}}>{formatISODateStr(date)}</Text>
         </TouchableOpacity>
     )
 }
 
-const HistoryAccordion = ({historyData}) => {
+const HistoryAccordion = ({historyData, navigation}) => {
     return (
         <AccordionItem
             title="Workout Record"
             children={Object.entries(historyData)}
             flatList={true}
-            renderItem={renderHistoryDataItem}
+            renderItem={(props) => renderHistoryDataItem(props, navigation)}
         />
     )
 }
@@ -188,7 +188,7 @@ const WorkoutHistory = ({navigation}) => {
         return (
             <View style={{flex:1}}>
                 {/*<ExerciseSearchAccordion historyPairs={historyPairs} />*/}
-                <HistoryAccordion historyData={historyData} />
+                <HistoryAccordion historyData={historyData} navigation={navigation} />
                 <TextInput 
                     style={styles.itemtitle}
                     value={search}
