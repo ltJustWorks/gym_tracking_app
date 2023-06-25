@@ -4,6 +4,7 @@ import { View, FlatList, TextInput, Button, Text, TouchableOpacity, Alert } from
 import { getData, saveData } from "../storage/dataHelper"
 import styles from "../styles/styles"
 import AccordionItem from "../components/AccordionItem"
+import { formatISODateStr } from "../helpers/helpers"
 
 const Set = ({set}) => {
     return (
@@ -15,7 +16,6 @@ const Set = ({set}) => {
 }
 
 const Exercise = ({exercise_name, set_list}) => {
-    console.log("marker", set_list)
     return (
         <View style={{backgroundColor:"#eaeaea", padding:2, margin:4, borderRadius:20}}>
             <Text style={styles.subtext}>{exercise_name}</Text>
@@ -27,6 +27,26 @@ const Exercise = ({exercise_name, set_list}) => {
     )
 }
 
+const deleteRecord = (date, navigation) => {
+    getData("workout_history")
+        .then((val) => {
+            let new_workout_history = val
+            delete new_workout_history[date]
+            return new_workout_history
+        })
+        .then((new_workout_history) => {
+            saveData("workout_history", new_workout_history)
+            navigation.navigate("Workout History")
+        })
+}
+
+const onDeleteRecord = (date, navigation) => {
+    Alert.alert("Attention", "Are you sure you want to delete this record?", [
+        {text:"Yes", onPress:() => {deleteRecord(date, navigation)}},
+        {text:"No", onPress:() => {}}
+    ])
+}
+
 const ViewWorkoutRecord = ({route, navigation}) => {
     const {date} = route.params
     const [record, setRecord] = useState({})
@@ -34,13 +54,23 @@ const ViewWorkoutRecord = ({route, navigation}) => {
     useEffect(() => {
         getData('workout_history')
             .then((val) => {
-                setRecord(val[date])
-                console.log(val[date])
+                if (val[date]) {
+                    setRecord(val[date])
+                }
             })
     }, [])
 
+    if (record === {}) {
+        return (
+            <View>
+                <Text style={styles.subtext}>The entry was not found or has been deleted.</Text>
+            </View>
+        )
+    }
+
     return (
         <View style={{flex:1, padding:4, justifyContent:"space-between"}}>
+            <Text style={styles.itemtitle}>{formatISODateStr(date)}</Text>
             <FlatList
                 data={Object.keys(record)}
                 renderItem={({item}) => <Exercise exercise_name={item} set_list={record[item]} />}
@@ -48,6 +78,7 @@ const ViewWorkoutRecord = ({route, navigation}) => {
             <View style={{borderRadius:20, overflow:"hidden"}}>
                 <Button
                     title="Delete Record"
+                    onPress={() => onDeleteRecord(date, navigation)}
                 />
             </View>
         </View>

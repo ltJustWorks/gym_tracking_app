@@ -5,6 +5,7 @@ import { getData, saveData } from "../storage/dataHelper"
 import { LineChart } from 'react-native-chart-kit'
 import styles from "../styles/styles"
 import AccordionItem from "../components/AccordionItem"
+import { formatISODateStr } from "../helpers/helpers"
 
 const ExerciseSearchAccordion = ({historyPairs}) => {
     const exercises = historyPairs.map(pair => pair[0])
@@ -83,11 +84,7 @@ const exercisesInHistory = (history) => {
     return exercises
 }
 
-const formatISODateStr = (ISODateStr) => {
-    const date = new Date(ISODateStr)
-    const formattedDate = date.toLocaleString("en-US", { month: "long", day: "numeric" })
-    return formattedDate
-}
+
 
 const formatLabels = (labels) => {
     let new_labels = []
@@ -149,6 +146,7 @@ const WorkoutHistory = ({navigation}) => {
     const [visiblePairs, setVisiblePairs] = useState([])
     const [visibleSize, setVisibleSize] = useState(5)
     const [search, setSearch] = useState('')
+    const isFocused = useIsFocused()
 
     useEffect(() => {
 
@@ -170,7 +168,7 @@ const WorkoutHistory = ({navigation}) => {
                 setVisiblePairs(pairs)
             })
             .then(() => console.log("marker", Object.keys(historyData)))
-    }, [])
+    }, [isFocused])
 
     if (!historyPairs) {
         return (
