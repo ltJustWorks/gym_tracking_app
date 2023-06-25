@@ -23,7 +23,9 @@ const renderHistoryDataItem = (props, navigation) => {
     const date = item[0]
     return (
         <TouchableOpacity
-            onPress={() => navigation.navigate("View Workout Record")}
+            onPress={() => navigation.navigate("View Workout Record", {
+                date: date,
+            })}
         >
             <Text style={{fontSize:18, padding:2}}>{formatISODateStr(date)}</Text>
         </TouchableOpacity>
