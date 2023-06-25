@@ -18,10 +18,14 @@ const ExerciseSearchAccordion = ({historyPairs}) => {
     )
 }
 
-const renderHistoryDataItem = ({item}) => {
+const renderHistoryDataItem = (props, navigation) => {
+    const item = props.item
+    const date = item[0]
     return (
-        <TouchableOpacity>
-            <Text style={{fontSize:18, padding:2}}>{item}</Text>
+        <TouchableOpacity
+            onPress={navigation.navigate("View Workout Record")}
+        >
+            <Text style={{fontSize:18, padding:2}}>{formatISODateStr(date)}</Text>
         </TouchableOpacity>
     )
 }
@@ -30,7 +34,7 @@ const HistoryAccordion = ({historyData}) => {
     return (
         <AccordionItem
             title="Workout Record"
-            children={Object.keys(historyData).map(formatISODateStr)}
+            children={Object.entries(historyData)}
             flatList={true}
             renderItem={renderHistoryDataItem}
         />
@@ -137,7 +141,7 @@ const onChangeSearch = (search, setVisibleSize, setVisiblePairs, historyPairs, s
     }
 }
 
-const WorkoutHistory = () => {
+const WorkoutHistory = ({navigation}) => {
     const [historyData, setHistoryData] = useState([])
     const [historyPairs, setHistoryPairs] = useState([]) // [[exercise_name, history_obj],...]
     const [visiblePairs, setVisiblePairs] = useState([])
