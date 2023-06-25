@@ -17,7 +17,7 @@ const Set = ({set}) => {
 const Exercise = ({exercise_name, set_list}) => {
     console.log("marker", set_list)
     return (
-        <View style={{backgroundColor:"#eaeaea", padding:2, margin:4}}>
+        <View style={{backgroundColor:"#eaeaea", padding:2, margin:4, borderRadius:20}}>
             <Text style={styles.subtext}>{exercise_name}</Text>
             <FlatList
                 data={set_list}
@@ -40,11 +40,16 @@ const ViewWorkoutRecord = ({route, navigation}) => {
     }, [])
 
     return (
-        <View>
+        <View style={{flex:1, padding:4, justifyContent:"space-between"}}>
             <FlatList
                 data={Object.keys(record)}
                 renderItem={({item}) => <Exercise exercise_name={item} set_list={record[item]} />}
             />
+            <View style={{borderRadius:20, overflow:"hidden"}}>
+                <Button
+                    title="Delete Record"
+                />
+            </View>
         </View>
     )
 }
