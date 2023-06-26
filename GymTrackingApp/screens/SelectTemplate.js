@@ -38,16 +38,16 @@ const SelectTemplate = ({navigation}) => {
     const [templates, setTemplates] = useState([])
 
     useEffect(() => {
-        console.log("marker", templates)
+        console.log("what", templates, templates === [])
         getData("templates")
             .then((val) => setTemplates(val))
     }, [])
 
-    if (templates === []) {
+    if (templates.length === 0) {
         return (
             <View>
                 <Text style={styles.title}>Templates</Text>
-                <Text style={styles.subtitle}>No exercise templates found.</Text>
+                <Text style={styles.subtext}>No exercise templates found.</Text>
             </View>
         )
     }
