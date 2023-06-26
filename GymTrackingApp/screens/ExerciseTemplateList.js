@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Button, FlatList, Text } from 'react-native'
+import { View, Button, FlatList, Text, Alert } from 'react-native'
 import { getData, saveData } from '../storage/dataHelper'
 import styles from '../styles/styles'
 
@@ -23,7 +23,12 @@ const Template = ({templateObj, templateList, setTemplateList}) => {
             <View style={{borderRadius:20, overflow:"hidden"}}>
             <Button
                 title="Delete Template"
-                onPress={(() => onDeleteTemplate(templateObj, templateList, setTemplateList))}
+                onPress={(() => {
+                    Alert.alert("Attention", "Are you sure you want to remove this template?", [
+                        {text:"Yes", onPress: () => onDeleteTemplate(templateObj, templateList, setTemplateList)},
+                        {text:"No", onPress: () => {}}
+                    ])
+                })}
             />
             </View>
         </View>
