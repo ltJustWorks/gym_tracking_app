@@ -66,7 +66,7 @@ const NewTemplateForm = ({navigation}) => {
 
             <ExerciseList exerciseList={exerciseList} templateObj={templateObj} setTemplateObj={setTemplateObj} />
 
-            <View style={{flex: 1}}> 
+            <View style={{flex: 1, justifyContent:"space-between"}}> 
             <AddedExercises templateObj={templateObj} setTemplateObj={setTemplateObj} />
 
 
