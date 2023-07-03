@@ -7,25 +7,7 @@ const exercisesList = require('../data/exercises/exercises.json')
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ExerciseList from '../components/ExerciseList'
 import AddedExercises from '../components/AddedExercises'
-
-const onSaveTemplate = (templateObj, navigation) => {
-    if (templateObj.name === "") {
-        Alert.alert("Error", "Add a template name.")
-        return
-    }
-    getData("templates")
-        .then((templatesList) => {
-            return [...templatesList, templateObj]
-        })
-        .then((newTemplatesList) => {
-            //console.log("new templates list:", newTemplatesList)
-            saveData("templates", newTemplatesList)
-        })
-        .then(() => navigation.navigate("Exercise Template List"))
-
-}
-
-
+import SaveTemplateButton from '../components/SaveTemplateButton'
 
 const NewTemplateForm = ({navigation}) => {
     const [templateObj, setTemplateObj] = useState({})
@@ -68,19 +50,7 @@ const NewTemplateForm = ({navigation}) => {
 
             <View style={{flex: 1, justifyContent:"space-between"}}> 
             <AddedExercises templateObj={templateObj} setTemplateObj={setTemplateObj} />
-
-
-            <View style={{borderRadius:20, overflow:"hidden", margin:4}}><Button 
-                title="Save template"
-                onPress={() => {
-                    if (templateObj.exercises.length === 0) {
-                        Alert.alert("Error", "Add some exercises before saving your template.")
-                    }
-                    else {
-                        onSaveTemplate(templateObj, navigation)
-                    }
-                }}
-            /></View>
+            <SaveTemplateButton templateObj={templateObj} navigation={navigation} />
             </View>
         </View>
     )
