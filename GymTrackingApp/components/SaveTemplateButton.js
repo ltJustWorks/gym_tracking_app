@@ -12,6 +12,9 @@ const onSaveTemplate = (templateObj, navigation) => {
     }
     getData("templates")
         .then((templatesList) => {
+            // check and alert if another template has same name
+            //for (const template of templatesList) {
+            //}
             return [...templatesList, templateObj]
         })
         .then((newTemplatesList) => {

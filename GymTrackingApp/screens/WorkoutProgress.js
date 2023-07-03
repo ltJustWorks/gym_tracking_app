@@ -28,7 +28,13 @@ const onRemoveSet = (set_no, sets, changeSets) => {
     console.log("marker", new_sets)
 }
 
-const EditableSet = ({set, sets, changeSets, lastWeight, lastReps, setEnteredWeight, setEnteredReps}) => {
+const onRemoveExercise = (exercise, workoutObj, setWorkoutObj) => {
+    const {[exercise]: _, ...filteredObj} = workoutObj 
+    console.log("filtered obj:", filteredObj)
+    setWorkoutObj(filteredObj)
+}
+
+const EditableSet = ({set, sets, changeSets, lastWeight, lastReps, setEnteredWeight, setEnteredReps, exercise, workoutObj, setWorkoutObj}) => {
     const [currWeight, setCurrWeight] = useState('')
     const [currReps, setCurrReps] = useState('')
 
@@ -73,7 +79,10 @@ const EditableSet = ({set, sets, changeSets, lastWeight, lastReps, setEnteredWei
                     justifyContent:"flex-end", alignItems:"center", padding:10}} 
                     onPress={() => {
                         if (sets.length === 1) {
-                            Alert.alert("Error", "You can't remove the first set.")
+                            Alert.alert("Attention", "Are you sure you want to remove the exercise?", [
+                                {text: "Yes", onPress: () => onRemoveExercise(exercise, workoutObj, setWorkoutObj)}, 
+                                {text: "No", onPress: () => {}}
+                            ])
                         }
                         else {onRemoveSet(set.set_no, sets, changeSets)}
                     }}
@@ -161,6 +170,9 @@ const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
                         lastReps={lastReps}
                         setEnteredWeight={setEnteredWeight}
                         setEnteredReps={setEnteredReps}
+                        exercise={exercise}
+                        workoutObj={workoutObj}
+                        setWorkoutObj={setWorkoutObj}
                     />}}
             /> 
             <View style={{borderRadius:20, overflow:"hidden"}}>
@@ -214,7 +226,7 @@ const WorkoutProgress = ({navigation}) => {
     return (
         <View style={styles.dividerContainer}>
             <FlatList
-                data={selectedExercises}
+                data={Object.keys(workoutObj)}
                 renderItem={({item}) => {
                     //const newWorkoutObj = {...workoutObj, item: []}   Don't set keys with vars like this
                     return(<Exercise exercise={item} workoutObj={workoutObj} setWorkoutObj={setWorkoutObj} />)
