@@ -10,7 +10,7 @@ const onRemoveExercise = (exercise_to_delete, templateObj, setTemplateObj) => {
 
 const AddedExercises = ({templateObj, setTemplateObj}) => {
     return (
-            <View>
+            <View style={{flex:1}}>
             <Text style={styles.title}>Added Exercises</Text>
             <FlatList
                 data={templateObj.exercises}

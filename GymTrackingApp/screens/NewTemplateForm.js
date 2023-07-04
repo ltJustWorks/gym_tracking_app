@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useId } from 'react'
 import { View, Text, TextInput, Button, FlatList, TouchableOpacity, Alert } from 'react-native'
+import styles from '../styles/styles'
 const exercisesList = require('../data/exercises/exercises.json')
 import ExerciseList from '../components/ExerciseList'
 import AddedExercises from '../components/AddedExercises'
@@ -32,14 +33,13 @@ const NewTemplateForm = ({navigation}) => {
     useEffect(() => console.log("template updated:", templateObj), [templateObj])
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, justifyContent:"space-between"}}>
             <SetTemplateName templateObj={templateObj} setTemplateObj={setTemplateObj} />
+
             <ExerciseList exerciseList={exerciseList} templateObj={templateObj} setTemplateObj={setTemplateObj} />
 
-            <View style={{flex: 1, justifyContent:"space-between"}}> 
             <AddedExercises templateObj={templateObj} setTemplateObj={setTemplateObj} />
             <SaveTemplateButton templateObj={templateObj} navigation={navigation} />
-            </View>
         </View>
     )
 }
