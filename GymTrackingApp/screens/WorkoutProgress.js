@@ -79,6 +79,7 @@ const EditableSet = ({set, sets, changeSets, lastWeight, lastReps, setEnteredWei
                     justifyContent:"flex-end", alignItems:"center", padding:10}} 
                     onPress={() => {
                         if (sets.length === 1) {
+                            // Implement something for removing last exercise
                             Alert.alert("Attention", "Are you sure you want to remove the exercise?", [
                                 {text: "Yes", onPress: () => onRemoveExercise(exercise, workoutObj, setWorkoutObj)}, 
                                 {text: "No", onPress: () => {}}
