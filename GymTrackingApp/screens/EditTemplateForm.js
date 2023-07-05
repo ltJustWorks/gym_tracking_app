@@ -6,9 +6,13 @@ import styles from '../styles/styles'
 const exercisesList = require('../data/exercises/exercises.json')
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const EditTemplateForm = ({}) => {
+const EditTemplateForm = ({route, navigation}) => {
+    const {templateObj} = route.params
+
     return (
-        <View></View>
+        <View>
+            <Text>{templateObj ? "Yes" : "No"}</Text>
+        </View>
     )
 }
 

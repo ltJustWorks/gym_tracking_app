@@ -32,7 +32,9 @@ const Template = ({templateObj, templateList, setTemplateList, navigation}) => {
             />
             <RoundButton 
                 title="Edit Template"
-                onPress={() => {navigation.navigate("Edit Template Form")}} 
+                onPress={() => {navigation.navigate("Edit Template Form", {
+                    templateObj: templateObj
+                })}} 
             />
         </View>
     )
