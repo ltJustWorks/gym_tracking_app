@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Button, FlatList, Text, Alert } from 'react-native'
 import { getData, saveData } from '../storage/dataHelper'
 import styles from '../styles/styles'
+import RoundButton from '../components/RoundButton'
 
 const onDeleteTemplate = (templateObjToRemove, templateList, setTemplateList) => {
     console.log("old template list:", templateList)
@@ -20,8 +21,7 @@ const Template = ({templateObj, templateList, setTemplateList}) => {
                 data={templateObj.exercises}
                 renderItem={({item}) => <Text style={styles.subtext}>{item}</Text>}
             />
-            <View style={{borderRadius:20, overflow:"hidden"}}>
-            <Button
+            <RoundButton
                 title="Delete Template"
                 onPress={(() => {
                     Alert.alert("Attention", "Are you sure you want to remove this template?", [
@@ -30,7 +30,10 @@ const Template = ({templateObj, templateList, setTemplateList}) => {
                     ])
                 })}
             />
-            </View>
+            <RoundButton 
+                title="Edit Template"
+                onPress={() => {}} 
+            />
         </View>
     )
 }
