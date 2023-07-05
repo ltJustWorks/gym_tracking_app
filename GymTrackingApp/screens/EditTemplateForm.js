@@ -10,12 +10,36 @@ import AddedExercises from '../components/AddedExercises'
 import SaveTemplateButton from '../components/SaveTemplateButton'
 import SetTemplateName from '../components/SetTemplateName'
 
-const onSaveTemplate = () => {}
+const onSaveTemplate = (templateObj, navigation) => {
+    if (templateObj.name === "") {
+        Alert.alert("Error", "Add a template name.")
+        return
+    }
+    getData("templates")
+        .then((templatesList) => {
+            for (let template of templatesList) {
+                if (template.name === templateObj.oldName) {
+                    console.log("list before:", templatesList)
+                    console.log("match found")
+                    const newTemplatesList = templatesList.map((template) => {
+                        if (template.name === templateObj.oldName) {
+                            return templateObj
+                        }
+                        else {return template}
+                    })
+                    console.log("list after:", newTemplatesList)
+                }
+            }
+        })
+}
 
 const EditTemplateForm = ({route, navigation}) => {
     const {templateObj} = route.params
+    templateObj.oldName = templateObj.name // not really a good solution?
+    // TODO: change to use uuids instead
     const [templateEditObj, setTemplateEditObj] = useState(templateObj)
 
+    // TODO: fix setEditTemplateObj
     return (
         <View style={{flex:1, justifyContent:"space-between"}}>
             <SetTemplateName templateObj={templateEditObj} setTemplateObj={setTemplateEditObj} />
