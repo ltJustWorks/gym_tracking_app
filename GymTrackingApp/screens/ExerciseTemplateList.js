@@ -12,7 +12,7 @@ const onDeleteTemplate = (templateObjToRemove, templateList, setTemplateList) =>
         .then(setTemplateList(newTemplateList))
 }
 
-const Template = ({templateObj, templateList, setTemplateList}) => {
+const Template = ({templateObj, templateList, setTemplateList, navigation}) => {
     console.log("templateobj in template list screen:", templateObj)
     return (
         <View style={styles.template}>
@@ -32,19 +32,20 @@ const Template = ({templateObj, templateList, setTemplateList}) => {
             />
             <RoundButton 
                 title="Edit Template"
-                onPress={() => {}} 
+                onPress={() => {navigation.navigate("Edit Template Form")}} 
             />
         </View>
     )
 }
 
-const renderTemplate = (templateObj, templateList, setTemplateList) => {
+const renderTemplate = (templateObj, templateList, setTemplateList, navigation) => {
     console.log("passed:", templateObj)
     return (
         <Template
             templateObj={templateObj}
             templateList={templateList}
             setTemplateList={setTemplateList}
+            navigation={navigation}
         />
     )
 }
@@ -92,7 +93,7 @@ const ExerciseTemplateList = ({navigation}) => {
             <FlatList
                 style={styles.templateList}
                 data={templateList}
-                renderItem={({item}) => renderTemplate(item, templateList, setTemplateList)}
+                renderItem={({item}) => renderTemplate(item, templateList, setTemplateList, navigation)}
             />
 
             <NewTemplateButton navigation={navigation} />
