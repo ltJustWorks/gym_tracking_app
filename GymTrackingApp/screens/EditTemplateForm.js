@@ -6,3 +6,10 @@ import styles from '../styles/styles'
 const exercisesList = require('../data/exercises/exercises.json')
 import Icon from 'react-native-vector-icons/FontAwesome'
 
+const EditTemplateForm = ({}) => {
+    return (
+        <View></View>
+    )
+}
+
+export default EditTemplateForm
