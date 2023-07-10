@@ -32,6 +32,7 @@ const onSaveTemplate = (templateObj, navigation) => {
         })
         .then((newTemplateObj) => {
             saveData("templates", newTemplateObj)
+            .then(() => navigation.navigate("Exercise Template List"))
         })
 }
 
