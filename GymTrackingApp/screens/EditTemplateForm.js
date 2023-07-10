@@ -34,20 +34,19 @@ const onSaveTemplate = (templateObj, navigation) => {
 }
 
 const EditTemplateForm = ({route, navigation}) => {
-    const {templateObj} = route.params
-    templateObj.oldName = templateObj.name // not really a good solution?
+    const {importObj} = route.params
+    importObj.oldName = importObj.name // not really a good solution?
     // TODO: change to use uuids instead
-    const [templateEditObj, setTemplateEditObj] = useState(templateObj)
+    const [templateObj, setTemplateObj] = useState(importObj)
 
-    // TODO: fix setEditTemplateObj
     return (
         <View style={{flex:1, justifyContent:"space-between"}}>
-            <SetTemplateName templateObj={templateEditObj} setTemplateObj={setTemplateEditObj} />
+            <SetTemplateName templateObj={templateObj} setTemplateObj={setTemplateObj} />
 
-            <ExerciseList exerciseList={exerciseList} templateObj={templateObj} setTemplateObj={setTemplateEditObj} />
+            <ExerciseList exerciseList={exerciseList} templateObj={templateObj} setTemplateObj={setTemplateObj} />
 
-            <AddedExercises templateObj={templateEditObj} setTemplateObj={setTemplateEditObj} />
-            <SaveTemplateButton templateObj={templateEditObj} 
+            <AddedExercises templateObj={templateObj} setTemplateObj={setTemplateObj} />
+            <SaveTemplateButton templateObj={templateObj} 
                 navigation={navigation} onSaveTemplate={onSaveTemplate}/>
         </View>
     )
