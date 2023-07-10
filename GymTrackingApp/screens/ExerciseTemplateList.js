@@ -21,21 +21,23 @@ const Template = ({templateObj, templateList, setTemplateList, navigation}) => {
                 data={templateObj.exercises}
                 renderItem={({item}) => <Text style={styles.subtext}>{item}</Text>}
             />
-            <RoundButton
-                title="Delete Template"
-                onPress={(() => {
-                    Alert.alert("Attention", "Are you sure you want to remove this template?", [
-                        {text:"Yes", onPress: () => onDeleteTemplate(templateObj, templateList, setTemplateList)},
-                        {text:"No", onPress: () => {}}
-                    ])
-                })}
-            />
-            <RoundButton 
-                title="Edit Template"
-                onPress={() => {navigation.navigate("Edit Template Form", {
-                    importObj: templateObj
-                })}} 
-            />
+            <View style={{flex:1, flexDirection:"row", justifyContent:"space-around"}}>
+                <RoundButton
+                    title="Delete Template"
+                    onPress={(() => {
+                        Alert.alert("Attention", "Are you sure you want to remove this template?", [
+                            {text:"Yes", onPress: () => onDeleteTemplate(templateObj, templateList, setTemplateList)},
+                            {text:"No", onPress: () => {}}
+                        ])
+                    })}
+                />
+                <RoundButton 
+                    title="Edit Template"
+                    onPress={() => {navigation.navigate("Edit Template Form", {
+                        importObj: templateObj
+                    })}} 
+                />
+                </View>
         </View>
     )
 }
