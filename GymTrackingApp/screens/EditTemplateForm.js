@@ -21,15 +21,17 @@ const onSaveTemplate = (templateObj, navigation) => {
                 if (template.name === templateObj.oldName) {
                     console.log("list before:", templatesList)
                     console.log("match found")
-                    const newTemplatesList = templatesList.map((template) => {
+                    return templatesList.map((template) => {
                         if (template.name === templateObj.oldName) {
                             return templateObj
                         }
                         else {return template}
                     })
-                    console.log("list after:", newTemplatesList)
                 }
             }
+        })
+        .then((newTemplateObj) => {
+            saveData("templates", newTemplateObj)
         })
 }
 
