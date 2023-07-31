@@ -95,6 +95,7 @@ const formatLabels = (labels) => {
 }
 
 const HistoryChart = ({exercise, historyData}) => {
+    console.log("history data:", historyData["datasets"])
     return (
         <View style={{flex: 1, alignItems: "center", margin:4}}>
             <Text style={styles.subtext}>{exercise}</Text>
@@ -138,6 +139,10 @@ const onChangeSearch = (search, setVisibleSize, setVisiblePairs, historyPairs, s
     else {
         setVisiblePairs(historyPairs.filter(([exercise, _]) => exercise.toLowerCase().includes(search.toLowerCase())))
     }
+}
+
+const filterHistoryDataWeight = (workout_history) => {
+    
 }
 
 const WorkoutHistory = ({navigation}) => {
