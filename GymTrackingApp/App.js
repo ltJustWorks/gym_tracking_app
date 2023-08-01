@@ -11,6 +11,7 @@ import ViewExercise from './screens/ViewExercise';
 import WorkoutHistory from './screens/WorkoutHistory';
 import ViewWorkoutRecord from './screens/ViewWorkoutRecord';
 import EditTemplateForm from './screens/EditTemplateForm';
+import ProgressAddExercise from './screens/ProgressAddExercise';
 
 const Stack = createNativeStackNavigator()
 
@@ -26,6 +27,7 @@ const App = () => {
         <Stack.Screen name="View Exercise" component={ViewExercise} />
         <Stack.Screen name="Select Template" component={SelectTemplate} />
         <Stack.Screen name="Workout Progress" component={WorkoutProgress} />
+        <Stack.Screen name="Quick Add Exercise" component={ProgressAddExercise} />
         <Stack.Screen name="Workout History" component={WorkoutHistory} />
         <Stack.Screen name="View Workout Record" component={ViewWorkoutRecord} />
       </Stack.Navigator>

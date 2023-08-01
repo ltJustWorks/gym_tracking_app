@@ -8,8 +8,12 @@ const exercisesList = require('../data/exercises/exercises.json')
 const ProgressAddExercise = ({route, navigation}) => {
     const [templateObj, setTemplateObj] = useState(route.params.templateObj)
 
+    useEffect(() => {
+        console.log("marker", route.params.templateObj)
+    }, [])
+
     return (
-        <View>
+        <View style={{flex:1}}>
             <ExerciseList exerciseList={exercisesList} templateObj={templateObj} />
         </View>
     )

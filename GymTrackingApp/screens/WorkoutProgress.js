@@ -4,6 +4,7 @@ import { View, FlatList, TextInput, Button, Text, Alert, TouchableOpacity } from
 import { getData, saveData } from "../storage/dataHelper"
 import styles from "../styles/styles"
 import Icon from 'react-native-vector-icons/FontAwesome'
+import RoundButton from "../components/RoundButton"
 
 const onChangeSet = (set_no, new_weight, new_reps, sets, changeSets) => {
     new_sets = JSON.parse(JSON.stringify(sets))
@@ -233,6 +234,10 @@ const WorkoutProgress = ({navigation}) => {
                     return(<Exercise exercise={item} workoutObj={workoutObj} setWorkoutObj={setWorkoutObj} />)
                 }}
             />
+            <RoundButton title="Quick Add Exercise" onPress={
+                () => navigation.navigate("Quick Add Exercise", {
+                    templateObj: workoutObj //TODO: CHANGE THIS 
+                })} /> 
             <View style={{borderRadius:20, overflow:"hidden", margin:4, backgroundColor:'transparent'}}>
             <Button
                 title="Finish workout"

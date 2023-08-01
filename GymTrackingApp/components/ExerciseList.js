@@ -53,7 +53,7 @@ const ExerciseList = ({exerciseList, templateObj, setTemplateObj}) => {
     const [filteredList, setFilteredList] = useState([])
 
     return (
-        <View style={{maxHeight: "45%"}}>
+        <View style={{flex:1}}>
             <Text style={styles.title}>Exercise List</Text>
 
             <TextInput 
