@@ -26,12 +26,11 @@ const onRemoveSet = (set_no, sets, changeSets) => {
         else {return set}
     })
     changeSets(new_sets)
-    console.log("marker", new_sets)
 }
 
 const onRemoveExercise = (exercise, workoutObj, setWorkoutObj) => {
     const {[exercise]: _, ...filteredObj} = workoutObj 
-    console.log("filtered obj:", filteredObj)
+    console.log("new obj:", filteredObj)
     setWorkoutObj(filteredObj)
 }
 
@@ -116,15 +115,12 @@ const addSet = (sets, changeSets) => {
         weight: weight, // TODO: Figure out how to get previous reps, sets and weight from workout history
         reps: reps
     }]
-    console.log("marker", newSets)
     changeSets(newSets)
 }
 
 
 
 const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
-    const isFocused = useIsFocused()
-
     const [lastWeight, setLastWeight] = useState('0')
     const [lastReps, setLastReps] = useState('0')
 
@@ -198,32 +194,38 @@ const Exercise = ({exercise, workoutObj, setWorkoutObj}) => {
 }
 
 const initializeWorkoutObj = (workoutObj, selectedExercises) => {
-    const newWorkoutObj = {}
+    const newWorkoutObj = JSON.parse(JSON.stringify(workoutObj))
     for (let exercise of selectedExercises) {
-        newWorkoutObj[exercise] = [{set_no: 1, weight: 0, reps: 0}]
+        if (!newWorkoutObj[exercise]) {
+            newWorkoutObj[exercise] = [{set_no: 1, weight: 0, reps: 0}]
+        }
     }
     return newWorkoutObj
 }
 
-const WorkoutProgress = ({navigation}) => {
+const WorkoutProgress = ({route, navigation}) => {
     /* Hierarchy:
     Workout Progress -> Exercise -> Editable Set
     How to add new set?
      * Store sets in stateful component
     */ 
-    const route = useRoute()
-    const selectedExercises = route.params?.exercises
+    const selectedExercises = route.params.exercises
+    const defaultWorkoutObj = route.params.workoutObj 
+        ? initializeWorkoutObj(route.params.workoutObj, selectedExercises) : {}
 
-    const [workoutObj, setWorkoutObj] = useState(initializeWorkoutObj({}, selectedExercises))
+    const [workoutObj, setWorkoutObj] = useState(defaultWorkoutObj)
+    const isFocused = useIsFocused()
 
+    useEffect(() => {
+        setWorkoutObj(initializeWorkoutObj(defaultWorkoutObj, selectedExercises))
+    }, [isFocused])
+    
     /* 
         {
             exercise_name: [{set_no: ...},...],
             ...
         }
     */
-
-
 
     return (
         <View style={styles.dividerContainer}>
@@ -236,7 +238,7 @@ const WorkoutProgress = ({navigation}) => {
             />
             <RoundButton title="Quick Add Exercise" onPress={
                 () => navigation.navigate("Quick Add Exercise", {
-                    templateObj: workoutObj //TODO: CHANGE THIS 
+                    workoutObj: workoutObj
                 })} /> 
             <View style={{borderRadius:20, overflow:"hidden", margin:4, backgroundColor:'transparent'}}>
             <Button
@@ -249,7 +251,6 @@ const WorkoutProgress = ({navigation}) => {
 }
 
 const onFinishWorkout = (workoutObj, navigation) => {
-    console.log("marker 2", workoutObj)
     getData("workout_history")
         .then((res) => {
             // 
