@@ -1,2 +1,5 @@
 GymTrackingApp/android/gradle.properties
 GymTrackingApp/data/exercises
+
+.old.GymTrackingApp
+.old2.GymTrackingApp
